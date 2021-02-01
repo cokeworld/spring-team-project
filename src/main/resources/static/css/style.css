@@ -1,0 +1,47 @@
+.app {
+	width: 1020px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -450px;
+	margin-left: -450px;
+}
+
+div {
+	padding: 10px;
+	border: solid red 1px;
+}
+
+span {
+	border: solid green 1px;
+}
+
+table, td, tr {
+	border: solid 1px blue;
+}
+
+.verticality {
+	display: inline-flex;
+	flex-direction: column;
+}
+
+.horizontal {
+	display: inline-flex;
+	flex-direction: row;
+}
+
+hr {
+	border: 0;
+	height: 1px;
+	background: #d2d2d2;
+}
+
+ul{
+   list-style:none;
+   }
+
+.costTab {
+    display: inline-block;
+    position: sticky;
+    top: 10px;
+}
