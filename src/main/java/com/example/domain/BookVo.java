@@ -1,5 +1,7 @@
 package com.example.domain;
 
+import java.sql.Timestamp;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -15,6 +17,7 @@ public class BookVo {
 	private String paidAmount;
 	private String pgProvider;
 	private String buyerName;
+	private Timestamp paidAt;
 }
 
 

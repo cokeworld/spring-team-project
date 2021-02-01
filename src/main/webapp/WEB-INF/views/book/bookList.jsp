@@ -53,6 +53,10 @@
                             <td>${ bookVo.buyerName }</td>
                         </tr>
                         <tr>
+                            <th>결제시간</th>
+                            <td>${ bookVo.paidAt }</td>
+                        </tr>
+                        <tr>
                             <th>기타 여러 내역 가져올 수 있음.</th>
                             <td>결제일시, 구매자아이디, 판매자아이디, 결제번호 등등.</td>
                         </tr>

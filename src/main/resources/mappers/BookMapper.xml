@@ -5,8 +5,8 @@
 <mapper namespace="com.example.mapper.BookMapper">
 	
 	<insert id="addBook">
-		INSERT INTO book (impUid, merchantUid, paidAmount, pgProvider, buyerName) 
-		VALUES (#{impUid}, #{merchantUid}, #{paidAmount}, #{pgProvider}, #{buyerName}) 
+		INSERT INTO book (impUid, merchantUid, paidAmount, pgProvider, buyerName, paidAt) 
+		VALUES (#{impUid}, #{merchantUid}, #{paidAmount}, #{pgProvider}, #{buyerName}, #{paidAt}) 
 	</insert>
 	
 	<select id="getBookByNum" resultType="bookVo">

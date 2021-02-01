@@ -32,21 +32,22 @@
             // 모바일 결제시, 결제가 끝나고 랜딩되는 URL을 지정 (카카오페이, 페이코, 다날의 경우는 필요없음. PC와 마찬가지로 callback함수로 결과가 떨어짐)
         }, function(rsp) {
             if ( rsp.success ) {
-
+				let rqsData = { 
+						impUid: rsp.imp_uid,
+		        		merchantUid: rsp.merchant_uid,
+		        		paidAmount: rsp.paid_amount,
+		        		pgProvider: rsp.pg_provider,
+		        		buyerName: rsp.buyer_name,
+		        		// paidAt: rsp.paid_at
+				}
                 $.ajax({
-                    url: "/book/bookAjax",
+                    url: "iamportAjax",
                 	type: 'POST',
 //                 	dataType: 'json',
-                	data: {
-                		impUid: rsp.imp_uid,
-                		merchantUid: rsp.merchant_uid,
-                		paidAmount: rsp.paid_amount,
-                		pgProvider: rsp.pg_provider,
-                		buyerName: rsp.buyer_name,
-                    	},
+                	data: rqsData,
                    success: function(data) {
                        	alert('결제완료');
-                  		location.href = '/book/bookList?num=' + data.getBookNum // data.getBookNum - 수정해보장;
+                  		location.href = '/book/bookList?num=' + data
                      	},
                    	error:function(jqXHR, textStatus, errorThrown) {
        			  		console.log('데이터 전송 에러');
