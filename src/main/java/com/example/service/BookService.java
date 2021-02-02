@@ -33,14 +33,12 @@ public class BookService {
 		return bookMapper.getBookByNum(num);
 	}
 	
-//	public void setTimeStamp(BookVo bookVo) {
-//	try {
-//		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
-//		Date parseDate = (Date) dateFormat.parse(bookVo.getStrPaidAt());
-//		Timestamp timeStamp = new Timestamp(parseDate.getTime());
-//		bookVo.setPaidAt(timeStamp);
-//	} catch (ParseException e) {
-//		e.printStackTrace();
+//	public Timestamp getTimeStamp(String paidAt) {
+//		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+//		Timestamp timeStamp = new Timestamp(Long.parseLong(paidAt));
+////		String strPaidAt =  dateFormat.format(timeStamp);
+//		log.info("getTimeStamp");
+//		
+//		return timeStamp;
 //	}
-//}
 }

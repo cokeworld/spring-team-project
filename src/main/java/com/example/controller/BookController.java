@@ -44,6 +44,7 @@ public class BookController {
 		log.info("POST - addBook 호출");
 		
 		bookVo.setBookNum(mySqlService.getNextNum("book"));
+//		bookVo.setPaidAt(bookService.getTimeStamp(bookVo.getPaidAt()));
 		bookVo.setPaidAt(new Timestamp(System.currentTimeMillis()));
 		bookService.addBook(bookVo);
 		

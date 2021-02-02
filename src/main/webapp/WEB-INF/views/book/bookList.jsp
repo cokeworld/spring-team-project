@@ -42,7 +42,7 @@
                     <table>
                         <tr>
                             <th>결제금액</th>
-                            <td>${ bookVo.paidAmount }</td>
+                            <td>${ bookVo.paidAmount } 원</td>
                         </tr>
                         <tr>
                             <th>결제수단</th>
@@ -56,14 +56,39 @@
                             <th>결제시간</th>
                             <td>${ bookVo.paidAt }</td>
                         </tr>
-                        <tr>
-                            <th>기타 여러 내역 가져올 수 있음.</th>
-                            <td>결제일시, 구매자아이디, 판매자아이디, 결제번호 등등.</td>
-                        </tr>
                     </table>
                 </div>
             </div>
 
+            <div class="verticality">
+                <h2>찾아가는 방법</h2>
+                <div class="verticality">
+                    <div>
+                        <div>주소</div>
+                        <div>부산시 수영구 광안해변로 20번길 22</div>
+                    </div>
+                    <div><a href="">주소 복사하기</a></div>
+                </div>
+            </div>
+
+            
+            <div class="verticality">
+                <h2>숙소</h2>
+                <div class="verticality">
+                    <div>
+                        <a href="">숙소보기</a>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="verticality">
+                <h2>에어비앤비 지원</h2>
+                <div class="verticality">
+                    <div><a href="">도움말 센터</a></div>
+                    <div><a href="">호스트에게 전화하기</a></div>
+                </div>
+            </div>
         </div>
 
 
