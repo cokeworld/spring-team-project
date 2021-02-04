@@ -45,6 +45,7 @@ public class BookController {
 		
 		bookVo.setBookNum(mySqlService.getNextNum("book"));
 //		bookVo.setPaidAt(bookService.getTimeStamp(bookVo.getPaidAt()));
+		// paidAt API 콜백 값이 아닌 자바에서 처리
 		bookVo.setPaidAt(new Timestamp(System.currentTimeMillis()));
 		bookService.addBook(bookVo);
 		
