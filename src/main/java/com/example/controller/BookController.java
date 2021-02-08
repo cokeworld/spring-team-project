@@ -30,6 +30,12 @@ public class BookController {
 	@Autowired
 	MySqlService mySqlService;
 
+	@GetMapping("/bookMain")
+	public String bookMain() {
+		log.info("GET - 호출");
+		return "book/bookMain";
+	}
+	
 	
 	@GetMapping("/iamport")
 	public String iamport() {

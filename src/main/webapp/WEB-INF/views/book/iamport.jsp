@@ -24,7 +24,7 @@
             name : '주문명:결제테스트',
             amount : 14000,
             buyer_email : 'iamport@siot.do',
-            buyer_name : '이동욱',
+            buyer_name : '김두한',
             buyer_tel : '010-1234-5678',
             buyer_addr : '서울특별시 강남구 삼성동',
             buyer_postcode : '123-456',
