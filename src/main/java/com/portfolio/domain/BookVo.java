@@ -17,7 +17,7 @@ public class BookVo {
 	private String checkOut;
 	private int expectedCost;
 	private int cntOfPerson;
-	private int hostNum;
+	private int noNum;
 	private Timestamp regDate;
 	
 	private String impUid;

@@ -14,7 +14,7 @@
 <body>
     <div class="app">
         <div class="horizontal">
-            <a href="/content/info?num=${bookVo.hostNum}">뒤로가기</a>
+            <a href="/content/info?num=${bookVo.noNum}"><i class="fas fa-chevron-left"></i></a>
             <h1>예약 요청하기</h1>
         </div>
         <form action="/book/iamport" method="get">
@@ -42,16 +42,17 @@
                             </div>
                             <div><a href="">수정</a></div>
                         </div>
+                        <!-- 필수기능x 
                         <div class="horizontal business_trip">
                             <div>출장인가요?</div>
                             <div>(슬라이드 버튼)</div>
-                        </div>
+                        </div> 
+                        -->
                     </div>
                     <div class="verticality payment_means">
                         <h2>결제 수단</h2>
                         <div><i class="fab fa-cc-visa"></i> <i class="fab fa-cc-mastercard"></i> <i class="fab fa-cc-paypal"></i> <i class="fab fa-cc-apple-pay"></i></div>
                         <div>
-                            (toggle or dropdown로변경)
                             <br>
                             <select name="payment_means" id="payment-select">
                                 <option value="">--Please choose an option--</option>
@@ -92,7 +93,7 @@
                     </div>
                     <div class="confirm_message">
                         <div class="horizontal confirm_message_top">
-                            <div class="icon">(예약아이콘)</div>
+                            <div class="icon"><span style="font-size: 40px"><i class="far fa-calendar-alt"></i></span></div>
                             <div>호스트가 24시간 이내 예약 요청을 수락하기 전까지는 예약이 아직 확정된 것이 아닙니다.
                                 <br>
                                 예약 확정 전까지는 요금이 청구되지 않습니다.
@@ -114,11 +115,10 @@
                         <div class="accommodation_photo">(숙소사진)</div>
                         <div class="accommodation_info">
                             <ul>
-                                <li>(숙소 카테고리)</li>
-                                <li>(숙소이름)</li>
-                                <li>(숙소 스펙)</li>
-                                <li>(리뷰)</li>
-                                <li>(호스트클래스)</li>
+                                <li>${ hostVo.classification } ${ hostVo.houseType }</li>
+                                <li>${ hostVo.title }</li>
+                                <li>${ hostVo.hostComment }</li>
+                                <li><span style="color: #ff385c"><i class="fas fa-star"></i></span>${ score } (${ count }) </li>
                             </ul>
                         </div>
                     </div>

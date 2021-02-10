@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +17,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.portfolio.domain.BookVo;
+import com.portfolio.domain.HostVo;
+import com.portfolio.domain.ImagesVo;
+import com.portfolio.domain.ReviewVo;
 import com.portfolio.service.BookService;
+import com.portfolio.service.HostService;
 import com.portfolio.service.MysqlService;
 
 import lombok.extern.java.Log;
@@ -28,14 +34,34 @@ public class BookController {
 	@Autowired
 	BookService bookService;
 	@Autowired
+	HostService hostService;
+	@Autowired
 	MysqlService mysqlService;
 
 	@GetMapping("/bookMain")
 	public String bookMain(BookVo bookVo, Model model) {
 		log.info("GET - bookMain 호출");
 		
+		//content.jsp에서 받아온 결제 데이터 처리
 		model.addAttribute("bookVo", bookVo);
+		int num = bookVo.getNoNum();
 		
+		//hostData 받아오기
+		HostVo hostVo = hostService.getHostVo(num);
+		model.addAttribute("hostVo", hostVo);
+		
+		//image, count, score 데이터 받아오기
+		Map<String, Object> contentInfo = hostService.getContentInfo(num);
+		
+		List<ImagesVo> imageList = (List<ImagesVo>) contentInfo.get("imageList");
+		
+		int count = (int) contentInfo.get("count");
+		Double score = (Double) contentInfo.get("score");
+		score = Double.isNaN(score) ? 0.0 : score;
+		
+		model.addAttribute("imageList", imageList);
+		model.addAttribute("count", count);
+		model.addAttribute("score", score);
 		return "book/bookMain";
 	}
 	
