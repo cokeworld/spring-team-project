@@ -17,6 +17,8 @@
         var IMP = window.IMP; // 생략가능
         IMP.init('imp00454002'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
 
+		// name, amount 구현 계획(코드 합치는 단계에서는)
+        // buyer관련은 로그인 구현 완료후 값을 입력한다.
         IMP.request_pay({
             pg : 'kakao',
             pay_method : 'card',
