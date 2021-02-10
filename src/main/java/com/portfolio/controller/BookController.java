@@ -31,8 +31,11 @@ public class BookController {
 	MysqlService mysqlService;
 
 	@GetMapping("/bookMain")
-	public String bookMain() {
-		log.info("GET - 호출");
+	public String bookMain(BookVo bookVo, Model model) {
+		log.info("GET - bookMain 호출");
+		
+		model.addAttribute("bookVo", bookVo);
+		
 		return "book/bookMain";
 	}
 	

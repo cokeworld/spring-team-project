@@ -1,18 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <title>예약하기 - bookMain.jsp</title>
 </head>
 
 <body>
     <div class="app">
         <div class="horizontal">
-            <a href=""><  </a>
+            <a href="/content/info?num=${bookVo.hostNum}">뒤로가기</a>
             <h1>예약 요청하기</h1>
         </div>
         <form action="/book/iamport" method="get">
@@ -28,15 +30,15 @@
                         <div class="horizontal">
                             <div class="verticality">
                                 <div>날짜</div>
-                                <div>2021.2.22-2021.2.23</div>
-                                <div>(시계아이콘) 체크인:오후 3:00이후</div>
+                                <div>${bookVo.checkIn}  ~  ${bookVo.checkOut}</div>
+                                <div><i class="far fa-clock"></i> 체크인:오후 3:00이후</div>
                             </div>
                             <div><a href="">수정</a></div>
                         </div>
                         <div class="horizontal">
                             <div class="verticality">
                                 <div>게스트</div>
-                                <div>게스트 2명</div>
+                                <div>${bookVo.cntOfPerson} 명</div>
                             </div>
                             <div><a href="">수정</a></div>
                         </div>
@@ -47,7 +49,7 @@
                     </div>
                     <div class="verticality payment_means">
                         <h2>결제 수단</h2>
-                        <div>(결제 수단 아이콘 묶음)</div>
+                        <div><i class="fab fa-cc-visa"></i> <i class="fab fa-cc-mastercard"></i> <i class="fab fa-cc-paypal"></i> <i class="fab fa-cc-apple-pay"></i></div>
                         <div>
                             (toggle or dropdown로변경)
                             <br>
@@ -136,8 +138,8 @@
                                 <td>$0.63</td>
                             </tr>
                             <tr>
-                                <td>총 합계 (USD)</td>
-                                <td>$51.57</td>
+                                <td>총 합계</td>
+                                <td><fmt:formatNumber value="${bookVo.expectedCost}" pattern="#,###" /> 원</td>
                             </tr>
                         </table>
                     </div>

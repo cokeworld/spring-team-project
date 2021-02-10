@@ -695,7 +695,7 @@ table, td, tr {
 		  		booking: function() {
 		  			let isBooking = confirm('정말 결제하시겠습니까?');
 		  			if(isBooking) {
-		  				location.href='/book/iamport?checkIn='+this.startDate+'&checkOut='+this.endDate+'&cost=' + this.totalCost +'&cntOfPerson='+this.cntOfGuest+'&noNum=${ hostVo.num }';
+		  				location.href='/book/bookMain?checkIn='+this.startDate+'&checkOut='+this.endDate+'&expectedCost=' + this.totalCost +'&cntOfPerson='+this.cntOfGuest+'&hostNum=${ hostVo.num }';
 		  			}
 		  		}
 		  	},
