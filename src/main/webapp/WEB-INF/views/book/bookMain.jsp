@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <title>예약하기 - bookMain.jsp</title>
 </head>
 
@@ -103,7 +104,7 @@
                             아래 버튼을 선택하면, 숙소 이용규칙, 안전 정보 공개, 환불 정책, 에어비앤비의 사회적 거리 두기 및 기타 코로나19 관련 가이드라인, 및 게스트 환불 정책에 동의하는 것입니다. 또한 숙박세 및 서비스 수수료를 포함하여 표시된 총 금액에 동의합니다. 에어비앤비는 이제 이 지역에서 정부가 부과한 숙박세를 징수하여 납부합니다.
                         </div>
                     </div>
-                    <div class="btn_book"><button>예약 요청하기</button></div>
+                    <div><button class="btn_book">예약 요청하기</button></div>
                 </div>
             </div>
 
@@ -166,5 +167,19 @@
     </form>
 
     </div>
+    
+<script>
+	$('.btn_book').click(function() {
+		if(!$('#payment-select').val()) {
+			alert('결제 수단을 선택해주세요.');
+			$('html, body').animate({
+				scrollTop: $('.payment_means').offset().top
+				}, 1000);
+			return false;
+			}
+		});
+
+</script>
+
 </body>
 </html>
