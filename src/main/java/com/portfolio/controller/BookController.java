@@ -67,9 +67,12 @@ public class BookController {
 	
 	
 	@GetMapping("/iamport")
-	public String iamport() {
+	public String iamport(BookVo bookVo, Model model) {
 		log.info("GET - iamport 호출");
+		model.addAttribute("bookVo", bookVo);
 		
+		HostVo hostVo = hostService.getHostVo(bookVo.getNoNum());
+		model.addAttribute("hostVo", hostVo);
 		return "book/iamport";
 	}
 	

@@ -54,7 +54,7 @@
                         <div><i class="fab fa-cc-visa"></i> <i class="fab fa-cc-mastercard"></i> <i class="fab fa-cc-paypal"></i> <i class="fab fa-cc-apple-pay"></i></div>
                         <div>
                             <br>
-                            <select name="payment_means" id="payment-select">
+                            <select name="pgProvider" id="payment-select">
                                 <option value="">--Please choose an option--</option>
                                 <option value="kakaopay">Kakaopay</option>
                                 <option value="paypal">Paypal</option>
@@ -112,30 +112,45 @@
 
                 <div class="verticality costTab">
                     <div class="horizontal">
-                        <div class="accommodation_photo">(숙소사진)</div>
+                        <div class="accommodation_photo">
+                        	<img src="/upload/${ imageList[0].uploadpath }/${ imageList[0].uuid }_${ imageList[0].filename }" width="100" height="100">
+                        </div>
                         <div class="accommodation_info">
-                            <ul>
-                                <li>${ hostVo.classification } ${ hostVo.houseType }</li>
-                                <li>${ hostVo.title }</li>
-                                <li>${ hostVo.hostComment }</li>
-                                <li><span style="color: #ff385c"><i class="fas fa-star"></i></span>${ score } (${ count }) </li>
-                            </ul>
+                            <table>
+                            	<tr>
+                            		<td>${ hostVo.classification } ${ hostVo.houseType }</td>
+                            	</tr>
+                            	<tr>
+                            		<td>${ hostVo.title }</td>
+                            	</tr>
+                            	<tr>
+                            		<td>${ hostVo.hostComment }</td>
+                            	</tr>
+                            	<tr>
+                            		<td><span style="color: #ff385c"><i class="fas fa-star"></i></span>${ score } (${ count }) </td>
+                            	</tr>                            	                            	
+                            </table>
+
                         </div>
                     </div>
                     <div class="rate_details">
                         <h2>요금 세부정보</h2>
                         <table>
                             <tr>
-                                <td>$44.64 x 1박</td>
-                                <td>$44.64</td>
+                                <td>원 x 1박</td>
+                                <td>원</td>
+                            </tr>
+                            <tr>
+                                <td>청소비</td>
+                                <td>원</td>
                             </tr>
                             <tr>
                                 <td>서비스 수수료</td>
-                                <td>$6.30</td>
+                                <td>원</td>
                             </tr>
                             <tr>
                                 <td>숙박세와 수수료</td>
-                                <td>$0.63</td>
+                                <td>원</td>
                             </tr>
                             <tr>
                                 <td>총 합계</td>
@@ -145,8 +160,9 @@
                     </div>
                 </div>
             </div>
-
         </div>
+        <input type="hidden" name="noNum" value="${ bookVo.noNum }">
+        <input type="hidden" name="expectedCost" value="${ bookVo.expectedCost }">
     </form>
 
     </div>

@@ -20,11 +20,11 @@
 		// name, amount 구현 계획(코드 합치는 단계에서는)
         // buyer관련은 로그인 구현 완료후 값을 입력한다.
         IMP.request_pay({
-            pg : 'kakao',
+            pg : `${ bookVo.pgProvider }`,
             pay_method : 'card',
             merchant_uid : 'merchant_' + new Date().getTime(),
-            name : '주문명:결제테스트',
-            amount : 14000,
+            name : `${ hostVo.title }`,
+            amount : `${ bookVo.expectedCost }`,
             buyer_email : 'iamport@siot.do',
             buyer_name : '김두한',
             buyer_tel : '010-1234-5678',

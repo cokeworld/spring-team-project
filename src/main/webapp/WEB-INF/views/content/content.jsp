@@ -298,7 +298,7 @@ table, td, tr {
 							<table>
 								<tr>
 									<td id="period">
-										{{ stayCostPerOneDay | comma }}원/{{ gapPeriod }}박
+										{{ stayCostPerOneDay | comma }}원 x {{ gapPeriod }}박
 									</td>
 									<td id="stayCost">
 										{{ setPaymentCost | comma }}원
@@ -319,11 +319,11 @@ table, td, tr {
 									<td>숙박세와 수수료</td>
 									<td>{{ setTex | comma }}원</td>							
 								</tr>
+								<tr>
+									<td>총 합계</td>
+									<td>{{ setTotalCost | comma  }}원</td>
+								</tr>
 							</table>
-						</div>
-						<hr>
-						<div>
-						총금액 {{ setTotalCost | comma  }}원
 						</div>
 					</div>
 				</div>
