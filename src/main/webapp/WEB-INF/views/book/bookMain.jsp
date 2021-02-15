@@ -138,24 +138,20 @@
                         <h2>요금 세부정보</h2>
                         <table>
                             <tr>
-                                <td>원 x 1박</td>
-                                <td>원</td>
-                            </tr>
-                            <tr>
-                                <td>청소비</td>
-                                <td>원</td>
+                                <td><fmt:formatNumber value="${hostVo.cost}" pattern="#,###" />원 x ${bookVo.nights}박</td>
+                                <td><fmt:formatNumber value="${hostVo.cost * bookVo.nights }" pattern="#,###" />원</td>
                             </tr>
                             <tr>
                                 <td>서비스 수수료</td>
-                                <td>원</td>
+                                <td><fmt:formatNumber value="${hostVo.cost * bookVo.nights * 0.1}" pattern="#,###" />원</td>
                             </tr>
                             <tr>
                                 <td>숙박세와 수수료</td>
-                                <td>원</td>
+                                <td><fmt:formatNumber value="${hostVo.cost * bookVo.nights * 0.01}" pattern="#,###" />원</td>
                             </tr>
-                            <tr>
+                            <tr class="total_cost">
                                 <td>총 합계</td>
-                                <td><fmt:formatNumber value="${bookVo.expectedCost}" pattern="#,###" /> 원</td>
+                                <td><fmt:formatNumber value="${bookVo.expectedCost}" pattern="#,###"/>원</td>
                             </tr>
                         </table>
                     </div>
@@ -164,6 +160,9 @@
         </div>
         <input type="hidden" name="noNum" value="${ bookVo.noNum }">
         <input type="hidden" name="expectedCost" value="${ bookVo.expectedCost }">
+        <input type="hidden" name="checkIn" value="${bookVo.checkIn}">
+        <input type="hidden" name="checkOut" value="${bookVo.checkOut}">
+        <input type="hidden" name="cntOfPerson" value="${bookVo.cntOfPerson}">
     </form>
 
     </div>

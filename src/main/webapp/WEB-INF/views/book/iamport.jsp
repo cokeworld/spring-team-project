@@ -40,6 +40,10 @@
 		        		paidAmount: rsp.paid_amount,
 		        		pgProvider: rsp.pg_provider,
 		        		buyerName: rsp.buyer_name,
+		        		checkIn: `${bookVo.checkIn}`,
+		        		checkOut: `${bookVo.checkOut}`,
+		        		cntOfPerson: ${bookVo.cntOfPerson},
+		        		noNum: ${bookVo.noNum}
 		        		// paidAt: rsp.paid_at
 				}
                 $.ajax({

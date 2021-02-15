@@ -44,14 +44,14 @@ public class BookController {
 		
 		//content.jsp에서 받아온 결제 데이터 처리
 		model.addAttribute("bookVo", bookVo);
-		int num = bookVo.getNoNum();
+		int noNum = bookVo.getNoNum();
 		
 		//hostData 받아오기
-		HostVo hostVo = hostService.getHostVo(num);
+		HostVo hostVo = hostService.getHostVo(noNum);
 		model.addAttribute("hostVo", hostVo);
 		
 		//image, count, score 데이터 받아오기
-		Map<String, Object> contentInfo = hostService.getContentInfo(num);
+		Map<String, Object> contentInfo = hostService.getContentInfo(noNum);
 		
 		List<ImagesVo> imageList = (List<ImagesVo>) contentInfo.get("imageList");
 		
@@ -82,8 +82,6 @@ public class BookController {
 		log.info("POST - addBook 호출");
 		
 		bookVo.setBookNum(mysqlService.getNextNum("book"));
-//		bookVo.setPaidAt(bookService.getTimeStamp(bookVo.getPaidAt()));
-		// paidAt API 콜백 값이 아닌 자바에서 처리
 		bookVo.setPaidAt(new Timestamp(System.currentTimeMillis()));
 		bookService.addBook(bookVo);
 		
@@ -95,8 +93,12 @@ public class BookController {
 		log.info("GET-bookList 호출");
 		
 		BookVo bookVo = bookService.getBookByNum(num);
-		log.info("bookVo = " + bookVo.toString());
+		HostVo hostVo = hostService.getHostVo(bookVo.getNoNum());
+		log.info("bookList-bookVo = " + bookVo.toString());
+		log.info("bookList-hostVo = " + hostVo.toString());
+		
 		model.addAttribute("bookVo", bookVo);
+		model.addAttribute("hostVo", hostVo);
 		
 		return "book/bookList";
 	}

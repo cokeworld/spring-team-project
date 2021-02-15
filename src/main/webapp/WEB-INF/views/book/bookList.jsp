@@ -1,4 +1,3 @@
-<%@page import="com.example.domain.BookVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -14,7 +13,6 @@
 <body>
     <div class="app verticality">
         <div class="horizontal">
-            <a href=""><  </a>
             <h1>예약정보</h1>
         </div>
 
@@ -25,12 +23,12 @@
                  <div class="horizontal">
                     <div class="verticality">
                          <div>체크인</div>
-                         <div>2021년 2월 1일</div>
+                         <div>${ bookVo.checkIn }</div>
                          <div>오후 2:00</div>
                     </div>
                     <div class="verticality">
                         <div>체크아웃</div>
-                        <div>2021년 2월 2일</div>
+                        <div>${ bookVo.checkOut }</div>
                         <div>오후 12:00</div>
                     </div>
                  </div>
@@ -42,7 +40,8 @@
                     <table>
                         <tr>
                             <th>결제금액</th>
-                            <td>${ bookVo.paidAmount } 원</td>
+                            <td><fmt:formatNumber value="${ bookVo.paidAmount }" pattern="#,###"/>원</td>
+                            
                         </tr>
                         <tr>
                             <th>결제수단</th>
@@ -65,9 +64,9 @@
                 <div class="verticality">
                     <div>
                         <div>주소</div>
-                        <div>부산시 수영구 광안해변로 20번길 22</div>
+                        <div>${ hostVo.address1 } ${ hostVo.address2 }</div>
                     </div>
-                    <div><a href="">주소 복사하기</a></div>
+                    <!-- <div><a href="">주소 복사하기</a></div> -->
                 </div>
             </div>
 
@@ -76,7 +75,7 @@
                 <h2>숙소</h2>
                 <div class="verticality">
                     <div>
-                        <a href="">숙소보기</a>
+                        <a href="/content/info?num=${ hostVo.num }">숙소보기</a>
                     </div>
                 </div>
             </div>

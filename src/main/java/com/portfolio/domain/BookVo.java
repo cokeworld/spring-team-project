@@ -15,6 +15,7 @@ public class BookVo {
 	
 	private String checkIn;
 	private String checkOut;
+	private int nights;
 	private int expectedCost;
 	private int cntOfPerson;
 	private int noNum;
