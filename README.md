@@ -12,4 +12,5 @@
 </br></br>
 
 -예약 데이터베이스 테이블은 아래 링크 참고해주세요.</br>
-[예약 데이터베이스 테이블](https://cokeworld.tistory.com/35)
+[예약 데이터베이스 테이블](https://cokeworld.tistory.com/35) </br>
+bookList.jsp 에 import bookVo 삭제해주세요
