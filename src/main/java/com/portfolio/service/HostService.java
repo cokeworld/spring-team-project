@@ -45,6 +45,10 @@ public class HostService {
 		}
 	}
 	
+	public HostVo getHostVo(int num) {
+		return hostMapper.getContentInfo(num);
+	}
+	
 	@Transactional
 	public Map<String, Object> getContentInfo(int num) {
 		Map<String, Object> contentInfo = new HashMap<>();

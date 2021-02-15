@@ -298,16 +298,11 @@ table, td, tr {
 							<table>
 								<tr>
 									<td id="period">
-										{{ stayCostPerOneDay | comma }}원/{{ gapPeriod }}박
+										{{ stayCostPerOneDay | comma }}원 x {{ gapPeriod }}박
 									</td>
 									<td id="stayCost">
 										{{ setPaymentCost | comma }}원
 									</td>							
-								</tr>
-								
-								<tr>
-									<td>청소비</td>
-									<td>{{ cleanerCost | comma }}원</td>							
 								</tr>
 								
 								<tr>
@@ -319,11 +314,11 @@ table, td, tr {
 									<td>숙박세와 수수료</td>
 									<td>{{ setTex | comma }}원</td>							
 								</tr>
+								<tr>
+									<td>총 합계</td>
+									<td>{{ setTotalCost | comma  }}원</td>
+								</tr>
 							</table>
-						</div>
-						<hr>
-						<div>
-						총금액 {{ setTotalCost | comma  }}원
 						</div>
 					</div>
 				</div>
@@ -695,7 +690,7 @@ table, td, tr {
 		  		booking: function() {
 		  			let isBooking = confirm('정말 결제하시겠습니까?');
 		  			if(isBooking) {
-		  				location.href='/book/iamport?checkIn='+this.startDate+'&checkOut='+this.endDate+'&cost=' + this.totalCost +'&cntOfPerson='+this.cntOfGuest+'&noNum=${ hostVo.num }';
+		  				location.href='/book/bookMain?checkIn='+this.startDate+'&checkOut='+this.endDate+ '&nights='+this.gapPeriod+ '&expectedCost=' + this.totalCost +'&cntOfPerson='+this.cntOfGuest+'&noNum=${ hostVo.num }';
 		  			}
 		  		}
 		  	},
@@ -705,15 +700,15 @@ table, td, tr {
 		  			return this.stayCost;
 		  		},
 		  		setServiceCost: function() {
-		  			this.serviceCost = this.stayCost * 0.1
+		  			this.serviceCost = this.stayCost * 0.1;
 		  			return this.serviceCost;
 		  		},
 		  		setTex: function() {
-		  			this.tex = this.gapPeriod * 800;
+		  			this.tex = this.stayCost * 0.01;
 		  			return this.tex;
 		  		},
 		  		setTotalCost: function() {
-		  			this.totalCost = this.stayCost + this.serviceCost + this.cleanerCost + this.tex;
+		  			this.totalCost = this.stayCost + this.serviceCost + this.tex;
 		  			return this.totalCost;
 		  		}
 		  	},

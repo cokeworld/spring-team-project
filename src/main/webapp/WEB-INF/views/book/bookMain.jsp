@@ -1,18 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <title>예약하기 - bookMain.jsp</title>
 </head>
 
 <body>
     <div class="app">
         <div class="horizontal">
-            <a href=""><  </a>
+            <a href="/content/info?num=${bookVo.noNum}"><i class="fas fa-chevron-left"></i></a>
             <h1>예약 요청하기</h1>
         </div>
         <form action="/book/iamport" method="get">
@@ -28,30 +31,31 @@
                         <div class="horizontal">
                             <div class="verticality">
                                 <div>날짜</div>
-                                <div>2021.2.22-2021.2.23</div>
-                                <div>(시계아이콘) 체크인:오후 3:00이후</div>
+                                <div>${bookVo.checkIn}  ~  ${bookVo.checkOut}</div>
+                                <div><i class="far fa-clock"></i> 체크인:오후 3:00이후</div>
                             </div>
                             <div><a href="">수정</a></div>
                         </div>
                         <div class="horizontal">
                             <div class="verticality">
                                 <div>게스트</div>
-                                <div>게스트 2명</div>
+                                <div>${bookVo.cntOfPerson} 명</div>
                             </div>
                             <div><a href="">수정</a></div>
                         </div>
+                        <!-- 필수기능x 
                         <div class="horizontal business_trip">
                             <div>출장인가요?</div>
                             <div>(슬라이드 버튼)</div>
-                        </div>
+                        </div> 
+                        -->
                     </div>
                     <div class="verticality payment_means">
                         <h2>결제 수단</h2>
-                        <div>(결제 수단 아이콘 묶음)</div>
+                        <div><i class="fab fa-cc-visa"></i> <i class="fab fa-cc-mastercard"></i> <i class="fab fa-cc-paypal"></i> <i class="fab fa-cc-apple-pay"></i></div>
                         <div>
-                            (toggle or dropdown로변경)
                             <br>
-                            <select name="payment_means" id="payment-select">
+                            <select name="pgProvider" id="payment-select">
                                 <option value="">--Please choose an option--</option>
                                 <option value="kakaopay">Kakaopay</option>
                                 <option value="paypal">Paypal</option>
@@ -90,7 +94,7 @@
                     </div>
                     <div class="confirm_message">
                         <div class="horizontal confirm_message_top">
-                            <div class="icon">(예약아이콘)</div>
+                            <div class="icon"><span style="font-size: 40px"><i class="far fa-calendar-alt"></i></span></div>
                             <div>호스트가 24시간 이내 예약 요청을 수락하기 전까지는 예약이 아직 확정된 것이 아닙니다.
                                 <br>
                                 예약 확정 전까지는 요금이 청구되지 않습니다.
@@ -100,7 +104,7 @@
                             아래 버튼을 선택하면, 숙소 이용규칙, 안전 정보 공개, 환불 정책, 에어비앤비의 사회적 거리 두기 및 기타 코로나19 관련 가이드라인, 및 게스트 환불 정책에 동의하는 것입니다. 또한 숙박세 및 서비스 수수료를 포함하여 표시된 총 금액에 동의합니다. 에어비앤비는 이제 이 지역에서 정부가 부과한 숙박세를 징수하여 납부합니다.
                         </div>
                     </div>
-                    <div class="btn_book"><button>예약 요청하기</button></div>
+                    <div><button class="btn_book">예약 요청하기</button></div>
                 </div>
             </div>
 
@@ -109,44 +113,72 @@
 
                 <div class="verticality costTab">
                     <div class="horizontal">
-                        <div class="accommodation_photo">(숙소사진)</div>
+                        <div class="accommodation_photo">
+                        	<img src="/upload/${ imageList[0].uploadpath }/${ imageList[0].uuid }_${ imageList[0].filename }" width="100" height="100">
+                        </div>
                         <div class="accommodation_info">
-                            <ul>
-                                <li>(숙소 카테고리)</li>
-                                <li>(숙소이름)</li>
-                                <li>(숙소 스펙)</li>
-                                <li>(리뷰)</li>
-                                <li>(호스트클래스)</li>
-                            </ul>
+                            <table>
+                            	<tr>
+                            		<td>${ hostVo.classification } ${ hostVo.houseType }</td>
+                            	</tr>
+                            	<tr>
+                            		<td>${ hostVo.title }</td>
+                            	</tr>
+                            	<tr>
+                            		<td>${ hostVo.hostComment }</td>
+                            	</tr>
+                            	<tr>
+                            		<td><span style="color: #ff385c"><i class="fas fa-star"></i></span>${ score } (${ count }) </td>
+                            	</tr>                            	                            	
+                            </table>
+
                         </div>
                     </div>
                     <div class="rate_details">
                         <h2>요금 세부정보</h2>
                         <table>
                             <tr>
-                                <td>$44.64 x 1박</td>
-                                <td>$44.64</td>
+                                <td><fmt:formatNumber value="${hostVo.cost}" pattern="#,###" />원 x ${bookVo.nights}박</td>
+                                <td><fmt:formatNumber value="${hostVo.cost * bookVo.nights }" pattern="#,###" />원</td>
                             </tr>
                             <tr>
                                 <td>서비스 수수료</td>
-                                <td>$6.30</td>
+                                <td><fmt:formatNumber value="${hostVo.cost * bookVo.nights * 0.1}" pattern="#,###" />원</td>
                             </tr>
                             <tr>
                                 <td>숙박세와 수수료</td>
-                                <td>$0.63</td>
+                                <td><fmt:formatNumber value="${hostVo.cost * bookVo.nights * 0.01}" pattern="#,###" />원</td>
                             </tr>
-                            <tr>
-                                <td>총 합계 (USD)</td>
-                                <td>$51.57</td>
+                            <tr class="total_cost">
+                                <td>총 합계</td>
+                                <td><fmt:formatNumber value="${bookVo.expectedCost}" pattern="#,###"/>원</td>
                             </tr>
                         </table>
                     </div>
                 </div>
             </div>
-
         </div>
+        <input type="hidden" name="noNum" value="${ bookVo.noNum }">
+        <input type="hidden" name="expectedCost" value="${ bookVo.expectedCost }">
+        <input type="hidden" name="checkIn" value="${bookVo.checkIn}">
+        <input type="hidden" name="checkOut" value="${bookVo.checkOut}">
+        <input type="hidden" name="cntOfPerson" value="${bookVo.cntOfPerson}">
     </form>
 
     </div>
+    
+<script>
+	$('.btn_book').click(function() {
+		if(!$('#payment-select').val()) {
+			alert('결제 수단을 선택해주세요.');
+			$('html, body').animate({
+				scrollTop: $('.payment_means').offset().top
+				}, 1000);
+			return false;
+			}
+		});
+
+</script>
+
 </body>
 </html>
