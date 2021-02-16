@@ -24,11 +24,6 @@ public class SearchController {
 	@Autowired
 	private SearchService searchService;
 
-	@GetMapping("/searching")
-	public void search() {
-		log.info("searching() 호출됨");
-	} // search
-
 	@GetMapping("/result")
 	public String result(
 			@RequestParam(defaultValue = "1") int pageNum, 

@@ -1,8 +1,5 @@
 package com.portfolio.controller;
 
-import java.util.Timer;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -12,9 +9,12 @@ import lombok.extern.java.Log;
 @Log
 public class HomeController  {
 	
-	@Autowired
-	private Timer timer;
-
+	@GetMapping("/")
+	public String indexBlank() {
+		log.info("index() 호출됨");
+		return "index";
+	}
+	
 	@GetMapping("/index")
 	public String index() {
 		log.info("index() 호출됨");
