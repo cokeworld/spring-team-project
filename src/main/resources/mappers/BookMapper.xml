@@ -5,12 +5,12 @@
 <mapper namespace="com.portfolio.mapper.BookMapper">
 	
 	<insert id="addBook">
-		INSERT INTO book (impUid, merchantUid, paidAmount, pgProvider, buyerName, paidAt, checkIn, checkOut, cntOfPerson, noNum ) 
+		INSERT INTO airbnb_book (impUid, merchantUid, paidAmount, pgProvider, buyerName, paidAt, checkIn, checkOut, cntOfPerson, noNum ) 
 		VALUES (#{impUid}, #{merchantUid}, #{paidAmount}, #{pgProvider}, #{buyerName}, #{paidAt}, #{checkIn}, #{checkOut}, #{cntOfPerson}, #{noNum} ) 
 	</insert>
 	
 	<select id="getBookByNum" resultType="bookVo">
-		SELECT * FROM book WHERE bookNum = #{num}
+		SELECT * FROM airbnb_book WHERE bookNum = #{num}
 	</select>
 	
 </mapper>

@@ -81,7 +81,7 @@ public class BookController {
 	public int addBook(BookVo bookVo) {
 		log.info("POST - addBook 호출");
 		
-		bookVo.setBookNum(mysqlService.getNextNum("book"));
+		bookVo.setBookNum(mysqlService.getNextNum("airbnb_book"));
 		bookVo.setPaidAt(new Timestamp(System.currentTimeMillis()));
 		bookService.addBook(bookVo);
 		

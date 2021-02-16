@@ -19,6 +19,7 @@
 
 		// name, amount 구현 계획(코드 합치는 단계에서는)
         // buyer관련은 로그인 구현 완료후 값을 입력한다.
+        // pg: iamport 테스트 버전이라 무엇을 선택하든 카카오페이로 결제 진행
         IMP.request_pay({
             pg : `${ bookVo.pgProvider }`,
             pay_method : 'card',

@@ -34,14 +34,14 @@
                                 <div>${bookVo.checkIn}  ~  ${bookVo.checkOut}</div>
                                 <div><i class="far fa-clock"></i> 체크인:오후 3:00이후</div>
                             </div>
-                            <div><a href="">수정</a></div>
+                            <!-- <div><a href="">수정</a></div> -->
                         </div>
                         <div class="horizontal">
                             <div class="verticality">
                                 <div>게스트</div>
                                 <div>${bookVo.cntOfPerson} 명</div>
                             </div>
-                            <div><a href="">수정</a></div>
+                            <!-- <div><a href="">수정</a></div> -->
                         </div>
                         <!-- 필수기능x 
                         <div class="horizontal business_trip">
@@ -55,6 +55,7 @@
                         <div><i class="fab fa-cc-visa"></i> <i class="fab fa-cc-mastercard"></i> <i class="fab fa-cc-paypal"></i> <i class="fab fa-cc-apple-pay"></i></div>
                         <div>
                             <br>
+                            <!-- iamport 테스트 버전이라 무엇을 선택하든 카카오페이로 결제 진행 -->
                             <select name="pgProvider" id="payment-select">
                                 <option value="">--Please choose an option--</option>
                                 <option value="kakaopay">Kakaopay</option>
