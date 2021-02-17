@@ -59,6 +59,6 @@ public class SearchController {
 		model.addAttribute("count", count);
 		model.addAttribute("searchList", searchList);
 		
-		return "result";
+		return "search/result";
 	} // result
 }

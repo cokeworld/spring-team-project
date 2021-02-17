@@ -24,26 +24,26 @@ public class HomeController  {
 	@GetMapping("/writeForm")
 	public String writeForm() {
 		log.info("writeForm() 호출됨");
-		return "/hwh/writeForm";
+		return "/customerCenter/writeForm";
 	}
 	
 	@GetMapping("/customerCenter")
 	public String customerCenter() {
 		log.info("customerCenter() 호출됨");
-		return "/hwh/customerCenter";
+		return "/customerCenter/customerCenter";
 	}
 
-	@GetMapping("/search")
-	public String search() {
-		log.info("search() 호출됨");
-		return "search";
-	}
-	
-	@GetMapping("/result")
-	public String result() {
-		log.info("result() 호출됨");
-		return "result";
-	}
+//	@GetMapping("/search")
+//	public String search() {
+//		log.info("search() 호출됨");
+//		return "serach/search";
+//	}
+//	
+//	@GetMapping("/result")
+//	public String result() {
+//		log.info("result() 호출됨");
+//		return "serach/result";
+//	}
 	
 //	@GetMapping("/company/welcome")
 //	public void welcome() {

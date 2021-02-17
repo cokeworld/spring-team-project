@@ -12,14 +12,14 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
-<link href="/css/hwh.css" rel="stylesheet" type="text/css"  media="all">
+<link href="/css/mainPage.css" rel="stylesheet" type="text/css"  media="all">
 
 </head>
 <body>
 <div id="wrap">
 
 	<%-- header 영역 --%>
-	<jsp:include page="/WEB-INF/views/hwh/header.jsp" />
+	<jsp:include page="/WEB-INF/views/customerCenter/header.jsp" />
 
 	<div class="clear"></div>
 	
@@ -163,7 +163,7 @@
 	
 	<div class="clear"></div>
 	<%-- footer 영역 --%>
-	<jsp:include page="/WEB-INF/views/hwh/footer.jsp" />
+	<jsp:include page="/WEB-INF/views/customerCenter/footer.jsp" />
 	
 </div>
 
