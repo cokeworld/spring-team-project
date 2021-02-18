@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.portfolio.domain.HostVo;
 import com.portfolio.domain.PageDto;
-import com.portfolio.domain.SearchVo;
+import com.portfolio.service.ReviewService;
 import com.portfolio.service.SearchService;
 
 import lombok.extern.java.Log;
@@ -24,6 +25,9 @@ public class SearchController {
 	@Autowired
 	private SearchService searchService;
 
+	@Autowired
+	private ReviewService reviewService;
+	
 	@GetMapping("/result")
 	public String result(
 			@RequestParam(defaultValue = "1") int pageNum, 
@@ -41,7 +45,7 @@ public class SearchController {
 
 		log.info("count : " + count);
 		
-		List<SearchVo> searchList = null;
+		List<HostVo> searchList = null;
 		if (count > 0) {
 			searchList = searchService.getNoticesBySearch(address);
 		}
@@ -55,9 +59,11 @@ public class SearchController {
 			pageDto.setCount(count);
 		}
 		
+		//리뷰
+		
 		model.addAttribute("pageDto", pageDto);
 		model.addAttribute("count", count);
-		model.addAttribute("searchList", searchList);
+		model.addAttribute("hostList", searchList);
 		
 		return "search/result";
 	} // result

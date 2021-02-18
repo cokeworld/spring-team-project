@@ -6,14 +6,14 @@
 
 	<select id="getCountSearch" resultType="int">
 		SELECT COUNT(*) 
-		FROM airbnb_search
-		WHERE address LIKE CONCAT('%', #{address}, '%')
+		FROM airbnb_host
+		WHERE address1 LIKE CONCAT('%', #{address1}, '%')
 	</select>
 	
-	<select id="getNoticesBySearch" resultType="searchVo">
+	<select id="getNoticesBySearch" resultType="hostVo">
 		SELECT * 
-		FROM airbnb_search 
-		WHERE address LIKE CONCAT('%', #{address}, '%')
+		FROM airbnb_host 
+		WHERE address1 LIKE CONCAT('%', #{address1}, '%')
 	</select>
 	
 </mapper>
