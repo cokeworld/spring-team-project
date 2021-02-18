@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.portfolio.mapper.NoticeMapper">
+
+	<insert id="addNotice">
+		INSERT INTO airbnb_notice (id, subject, content, readcount, reg_date) 
+		VALUES (#{id}, #{subject}, #{content}, #{readcount}, #{regDate})
+	</insert>
+	
+	<update id="updateReadcount">
+		UPDATE airbnb_notice 
+		SET readcount = readcount + 1 
+		WHERE num = #{num} 
+	</update>
+	
+	<select id="getCountAll" resultType="int">
+		SELECT COUNT(*) FROM airbnb_notice
+	</select>
+	
+	<select id="getNotices" resultType="noticeVo">
+		SELECT * 
+		FROM airbnb_notice 
+		ORDER BY num DESC 
+		LIMIT #{startRow}, #{pageSize} 
+	</select>
+	
+	<update id="updateBoard">
+		UPDATE airbnb_notice 
+		SET subject = #{subject}, content = #{content} 
+		WHERE num = #{num} 
+	</update>
+	
+	<select id="getNoticesByNums" resultType="noticeVo">
+		SELECT * 
+		FROM airbnb_notice
+		WHERE num IN 
+		<foreach collection="numList" item="num" open="(" separator="," close=")">
+			#{num}
+		</foreach>
+	</select>
+	
+</mapper>
+
+
+
