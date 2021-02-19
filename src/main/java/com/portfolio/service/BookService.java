@@ -1,44 +1,78 @@
 package com.portfolio.service;
 
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.portfolio.domain.BookVo;
+import com.portfolio.domain.HostVo;
+import com.portfolio.domain.ImagesVo;
 import com.portfolio.mapper.BookMapper;
+import com.portfolio.mapper.HostMapper;
+import com.portfolio.mapper.ImagesMapper;
+import com.portfolio.mapper.MysqlMapper;
 
-import lombok.extern.java.Log;
-
-@Log
 @Service
-@Transactional
 public class BookService {
 	
 	@Autowired
 	private BookMapper bookMapper;
+
+	@Autowired
+	private MysqlMapper mysqlMapper;
 	
-	public void addBook(BookVo bookVo) {
-		log.info("Service-addBook bookVo = " + bookVo);
+	@Autowired
+	private HostMapper hostMapper;
+	
+	@Autowired
+	private ImagesMapper imagesMapper;
+	
+	public int addBook(BookVo bookVo) {
+		int num = mysqlMapper.getNextNum("airbnb_book");
+		
 		bookMapper.addBook(bookVo);
+		
+		return num;
 	}
 	
-	public BookVo getBookByNum(int num) {
-		log.info("bookNum : " + num);
-		log.info("bookVo : " + bookMapper.getBookByNum(num));
-		return bookMapper.getBookByNum(num);
+	@Transactional
+	public BookVo getBookInfoByNumAndId(int num, String id) {
+		BookVo bookVo = bookMapper.getBookInfoByNumAndId(num, id);
+		HostVo hostVo = hostMapper.getContentInfo(bookVo.getNoNum());
+		
+		bookVo.setHostVo(hostVo);
+		
+		return bookVo;
 	}
 	
-//	public Timestamp getTimeStamp(String paidAt) {
-//		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-//		Timestamp timeStamp = new Timestamp(Long.parseLong(paidAt));
-////		String strPaidAt =  dateFormat.format(timeStamp);
-//		log.info("getTimeStamp");
-//		
-//		return timeStamp;
-//	}
+	@Transactional
+	public List<BookVo> getBooksAndHostVoById(String id) {
+		List<BookVo> bookList = getBookInfoById(id);
+		for(BookVo bookVo : bookList) {
+			HostVo hostVo = hostMapper.getContentInfo(bookVo.getNoNum());
+			ImagesVo imagesVo = imagesMapper.getImageByNoNum(hostVo.getNum());
+			hostVo.setImageVo(imagesVo);
+			hostVo.setHostComment(hostVo.getHostComment().replaceAll("(\r\n|\r|\n|\n\r)", "<br>"));
+			bookVo.setHostVo(hostVo);
+		}
+		return bookList;
+	}
+	
+	public List<BookVo> getBookInfoByNum(int num) {
+		return bookMapper.getBookInfoByNum(num);
+	}
+	
+	public List<BookVo> getBookInfoById(String id) {
+		return bookMapper.getBookInfoById(id);
+	}
+	
+	public int updateBookInfo(BookVo bookVo) {
+		return bookMapper.updateBookInfo(bookVo);
+	}
+	
+	public int deleteBookInfo(int num) {
+		return bookMapper.deleteBookInfo(num);
+	}
 }

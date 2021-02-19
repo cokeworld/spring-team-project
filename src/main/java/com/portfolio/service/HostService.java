@@ -1,6 +1,10 @@
 package com.portfolio.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,12 +13,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.portfolio.domain.BookVo;
 import com.portfolio.domain.HostVo;
 import com.portfolio.domain.ImagesVo;
 import com.portfolio.domain.ReviewVo;
+import com.portfolio.domain.UserVo;
+import com.portfolio.mapper.BookMapper;
 import com.portfolio.mapper.HostMapper;
 import com.portfolio.mapper.ImagesMapper;
 import com.portfolio.mapper.ReviewMapper;
+import com.portfolio.mapper.UserMapper;
 
 import lombok.extern.java.Log;
 
@@ -32,6 +40,12 @@ public class HostService {
 	@Autowired
 	private ReviewMapper reviewMapper;
 	
+	@Autowired
+	private BookMapper bookMapper;
+	
+	@Autowired
+	private UserMapper userMapper;
+	
 	public void addContent(HostVo hostVo) {
 		hostMapper.addContent(hostVo);
 	}
@@ -45,29 +59,117 @@ public class HostService {
 		}
 	}
 	
-	public HostVo getHostVo(int num) {
+	@Transactional
+	public Map<String, Object> getContentInfoForBooking(int num, BookVo bookVo) throws ParseException {
+		Map<String, Object> contentInfo = new HashMap<>();
+		HostVo hostVo = hostMapper.getContentInfo(num);
+		UserVo userVo = userMapper.getMemberById(hostVo.getId());
+		
+		contentInfo.put("hostVo", hostVo);
+		contentInfo.put("userVo", userVo);
+		contentInfo.put("imagesVo", imagesMapper.getImageByNoNum(num));
+		contentInfo.put("count", reviewMapper.countReviewByNoNum(num));
+		List<BookVo> bookList = bookMapper.getBookInfoByNum(num);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-d");
+		
+		ArrayList<String> strBookList = new ArrayList<>();
+		for(BookVo bookVo1 : bookList) {
+			String checkIn = bookVo1.getCheckIn();
+			String checkOut = bookVo1.getCheckOut();
+		
+			Date startDate = sdf.parse(checkIn);
+			Date endDate = sdf.parse(checkOut);
+			Date currentDate = startDate;
+			while (currentDate.compareTo(endDate) <= -1) {
+				strBookList.add(sdf.format(currentDate));
+				Calendar c = Calendar.getInstance();
+				c.setTime(currentDate);
+				c.add(Calendar.DAY_OF_MONTH, 1);
+				currentDate = c.getTime();
+			}
+		}
+		contentInfo.put("bookList", strBookList);
+		
+		String score = reviewMapper.getAvgScoreByNoNum(num);
+		contentInfo.put("score", score);
+		
+		String checkIn = bookVo.getCheckIn();
+		String checkOut = bookVo.getCheckOut();
+	
+		Date startDate = sdf.parse(checkIn);
+		Date endDate = sdf.parse(checkOut);
+		Date currentDate = startDate;
+		int days = 0;
+		while (currentDate.compareTo(endDate) <= -1) {
+			Calendar c = Calendar.getInstance();
+			c.setTime(currentDate);
+			c.add(Calendar.DAY_OF_MONTH, 1);
+			currentDate = c.getTime();
+			days++;
+		}
+		contentInfo.put("days", days);
+		
+		return contentInfo;
+	}
+	
+	public HostVo getContent(int num) {
 		return hostMapper.getContentInfo(num);
 	}
 	
 	@Transactional
-	public Map<String, Object> getContentInfo(int num) {
+	public Map<String, Object> getContentInfo(int num) throws ParseException {
 		Map<String, Object> contentInfo = new HashMap<>();
 		
-		contentInfo.put("hostVo", hostMapper.getContentInfo(num));
-		contentInfo.put("imageList", imagesMapper.getImagesByNum(num));
+		HostVo hostVo = hostMapper.getContentInfo(num);
+		UserVo userVo = userMapper.getMemberById(hostVo.getId());
+		
+		log.info("userVo : " + userVo);
+		contentInfo.put("hostVo", hostVo);
+		contentInfo.put("userVo", userVo);
+		contentInfo.put("imageList", imagesMapper.getImagesByNoNum(num));
 		contentInfo.put("reviewList", reviewMapper.getReviewsByNoNum(num));
 		contentInfo.put("reviewListFour", reviewMapper.getReviewsByNoNumFour(num));
 		contentInfo.put("count", reviewMapper.countReviewByNoNum(num));
 		List<ReviewVo> reviewList = reviewMapper.getReviewsByNoNum(num);
+		List<BookVo> bookList = bookMapper.getBookInfoByNum(num);
 		
-		Double sum = 0.0;
-		for(ReviewVo reviewVo : reviewList) {
-			sum += Double.valueOf(reviewVo.getScore());
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-d");
+		
+		ArrayList<String> strBookList = new ArrayList<>();
+		for(BookVo bookVo : bookList) {
+			String checkIn = bookVo.getCheckIn();
+			String checkOut = bookVo.getCheckOut();
+		
+			Date startDate = sdf.parse(checkIn);
+			Date endDate = sdf.parse(checkOut);
+			Date currentDate = startDate;
+			while (currentDate.compareTo(endDate) <= -1) {
+				strBookList.add(sdf.format(currentDate));
+				Calendar c = Calendar.getInstance();
+				c.setTime(currentDate);
+				c.add(Calendar.DAY_OF_MONTH, 1);
+				currentDate = c.getTime();
+			}
 		}
-		
-		contentInfo.put("score", sum/reviewList.size());
+		contentInfo.put("bookList", strBookList);
+		contentInfo.put("score", reviewMapper.getAvgScoreByNoNum(num));
 		
 		return contentInfo;
+	}
+	
+	@Transactional
+	public List<HostVo> getContentInfoForMain() {
+		List<HostVo> hostList = new ArrayList<HostVo>();
+		hostList.add(hostMapper.getContentInfoForMain("아파트"));
+		hostList.add(hostMapper.getContentInfoForMain("주택"));
+		hostList.add(hostMapper.getContentInfoForMain("독특한 숙소"));
+		hostList.add(hostMapper.getContentInfoForMain("부티크 호텔"));
+		
+		for(HostVo hostVo : hostList) {
+			hostVo.setImageVo(imagesMapper.getImageByNoNum(hostVo.getNum()));
+		}
+		
+		return hostList;
 	}
 	
 	@Transactional

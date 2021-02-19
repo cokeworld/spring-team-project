@@ -11,10 +11,11 @@ import com.portfolio.mapper.MysqlMapper;
 public class MysqlService {
 	
 	@Autowired
-	MysqlMapper mysqlMapper;
-	
+	private MysqlMapper mysqlMapper;
+
 	public int getNextNum(String tableName) {
-		
-		return mysqlMapper.getNextNum(tableName);
+		int num = mysqlMapper.getNextNum(tableName);
+		return num;
 	}
+	
 }

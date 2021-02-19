@@ -7,9 +7,10 @@
 <head>
 <meta charset="UTF-8">
 <title>게시물</title>
+<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> -->
 <style>
 .app {
-	width: 1020px;
+	width: 1050px;
 	display: block;
 	margin: 0 auto;
 	position: relative;
@@ -17,7 +18,6 @@
 
 div {
 	padding: 10px;
-	border: solid red 1px;
 }
 
 span {
@@ -28,7 +28,7 @@ span {
 	float: right;
 }
 
-.container {
+.containerImages {
 	display: grid;
 	grid-template-columns: 500px 250px 250px;
 	grid-template-rows: 250px 250px;
@@ -75,13 +75,15 @@ hr {
 }
 
 table, td, tr {
-	border: solid 1px blue;
+	border: solid 1px #d2d2d2;
 }
 
 .costTab {
 	display: inline-block;
  	position: sticky;
- 	top: 10px;
+ 	z-index: 1;
+ 	background-color:white;
+ 	top: 100px;
 }
 .alignCenter {
 	text-align: center;
@@ -107,15 +109,38 @@ table, td, tr {
 	width: 30px;
 	text-align: center;
 }
+#checkInDate {
+	z-index: 2;
+}
+#checkInDate {
+	z-index: 2;
+}
 
+pre{
+    overflow: auto;
+    white-space: pre-wrap; /* pre tag내에 word wrap */
+}
+
+.drawOutLine {
+	border: solid 1px #d2d2d2;
+}
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"> -->
+<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
 </head>
-<body>
-	<div class="app" id="app">
-		<div>메인</div>
-		<div>${ hostVo.title }</div>
+<body style="background-color: #f2f2f2;">
+	<div class="app drawOutLine" id="app" style="background-color: white;">
+		<jsp:include page="/WEB-INF/views/include/commonHeader.jsp" />
+		<c:if test="${ pageVo.pageNum ne 0 }">
+			<div>
+				<a href="/search/result?pageNum=${ pageVo.pageNum }&address=${ pageVo.address }&checkIn=${ pageVo.checkIn }&checkOut=${ pageVo.checkOut }&cntOfPerson=${ pageVo.cntOfPerson }">
+					<span style="color: #d2d2d2;">
+						<i class="fas fa-angle-left fa-lg"></i>
+					</span>
+				</a>
+			</div>
+		</c:if>
+		<div class="drawOutLine">${ hostVo.title }</div>
 		<div>
 			<c:choose>
 				<c:when test="${ count eq 0 }">
@@ -126,11 +151,17 @@ table, td, tr {
 				</c:otherwise>
 			</c:choose>
 			
-			<button class="float_right" type="button" v-on:click="contentDelete">삭제</button>
-			<button class="float_right" type="button" v-on:click="contentSave">저장</button>
-			<button class="float_right" type="button" v-on:click="contentModify">수정</button>
+			<c:if test="${ id eq hostVo.id || id eq 'admin'}">
+				<button style="margin-left: 10px;" class="float_right btn btn-dark" type="button" v-on:click="contentDelete">삭제</button>
+				<button class="float_right btn btn-dark" type="button" v-on:click="contentModify">수정</button>
+			</c:if>
+			
+			<c:if test="${ not empty id && id ne 'admin' && id ne hostVo.id }">
+				<button class="float_right btn btn-dark" type="button" v-on:click="contentSave">저장</button>
+			</c:if>
+			
 		</div>
-		<div class="container">
+		<div class="containerImages">
 			<c:choose>
 				<c:when test="${ not empty imageList }">
 					<c:forEach var="image" items="${ imageList }" varStatus="status">
@@ -149,14 +180,23 @@ table, td, tr {
 			</c:choose>
 		</div>
 
-		<div class="horizontal">
+		<div class="horizontal drawOutLine">
 			<div class="verticality" style="width: 600px;">
-				<div class="horizontal">
-					<div class="verticality">
+				<div class="horizontal text-center">
+					<div class="verticality drawOutLine">
 						<div>${ hostVo.id }님이 호스팅하는 ${ hostVo.houseType }</div>
 						<div>최대 인원 ${ hostVo.countOfPerson }명ㆍ침실 ${ hostVo.countOfBedroom }개ㆍ욕실 ${ hostVo.countOfBathroom }개</div>
 					</div>
-					<div class="float_right">호스터 이미지</div>
+					<div class="float_right drawOutLine">
+						<c:choose>
+							<c:when test="${ not empty userVo.filename }">
+								<img src="/upload/${ userVo.uploadpath }/${ userVo.uuid }_${ userVo.filename }" width="150" height="150">
+							</c:when>
+							<c:otherwise>
+								<span><i class="fas fa-user fa-5x"></i></span>
+							</c:otherwise>
+						</c:choose>
+					</div>
 				</div>
 				<hr>
 				<div>
@@ -198,11 +238,15 @@ table, td, tr {
 						</tr>
 					</table>
 				</div>
-				<hr>
+				<div>
+					<hr>
+				</div>
 				<div>
 					${ hostVo.hostComment }
 				</div>
-				<hr>
+				<div>
+					<hr>
+				</div>
 				<div>
 					<h3>침대/침구 유형</h3>
 					<div>
@@ -221,7 +265,9 @@ table, td, tr {
 						</c:if>
 					</div>
 				</div>
-				<hr>
+				<div>
+					<hr>
+				</div>
 				<div>
 					<h3>편의시설</h3>
 					<c:choose>
@@ -236,7 +282,9 @@ table, td, tr {
 					</c:choose>
 					
 				</div>
-				<hr>
+				<div>
+					<hr>
+				</div>
 				<div>
 					<h3>안전시설</h3>
 					<c:choose>
@@ -252,6 +300,9 @@ table, td, tr {
 					
 				</div>
 				<div>
+					<hr>
+				</div>
+				<div>
 					<h3>이용 가능한 시설</h3>
 					
 					<c:choose>
@@ -265,44 +316,58 @@ table, td, tr {
 						</c:otherwise>
 					</c:choose>
 				</div>
-				<hr>
+				<div>
+					<hr>
+				</div>
 			</div>
 			<div>
-				<div class="costTab" style="width: 332px;">
+				<div class="costTab drawOutLine" style="width: 332px;">
 					<div>
 						<span>{{ stayCostPerOneDay | comma }}원/1박</span>
-						<span class="float_right">평점</span>
+						<span class="float_right">
+							<c:if test="${ count gt 0 }">
+								<span style="color: #ff385c"><i class="fas fa-star"></i></span><span>${ score }(${ count })</span>
+							</c:if>
+						</span>
 					</div>
 					<div class="dateNperson">
 						<div class="dateNpersonItem"> 
 							체크인
-<!-- 							<datepicker @update-date="updateDate"></datepicker> -->
-<!--     						<p>{{ date }}</p> -->
     						<input class="checkDates" type="text" id="checkInDate" readonly>
     					</div>
 						<div class="dateNpersonItem">
 							체크아웃
 							<input class="checkDates" type="text" id="checkOutDate" readonly>
 						</div>
-						<div class="dateNpersonItem">
-							게스트 인원<br>
-							<button type="button" v-on:click="cntOfGuestDown">-</button>
+						<div class="dateNpersonItem text-center">
+							게스트 인원 
+							<button type="button" class="btn btn-dark" v-on:click="cntOfGuestDown">-</button>
 							<input class="inputOutLine" name="cntOfGuest" v-model="cntOfGuest" readonly>
-							<button type="button" v-on:click="cntOfGuestUp">+</button>
+							<button type="button" class="btn btn-dark" v-on:click="cntOfGuestUp">+</button>
 						</div>
 					</div>
-					<div  v-if="isPaymentShow">
-						<div><button type="button" v-on:click="booking">예약하기</button></div>
+					
+					<div v-if="isPaymentShow">
+						<hr>
+						<div class="text-center">
+							<button type="button" class="btn btn-dark" v-on:click="booking">예약하기</button>
+						</div>
 						<div>예약 확정 전에는 요금이 청구되지 않습니다.</div>
+						<hr>
 						<div>
 							<table>
 								<tr>
 									<td id="period">
-										{{ stayCostPerOneDay | comma }}원 x {{ gapPeriod }}박
+										{{ stayCostPerOneDay | comma }}원/{{ gapPeriod }}박
 									</td>
 									<td id="stayCost">
 										{{ setPaymentCost | comma }}원
 									</td>							
+								</tr>
+								
+								<tr>
+									<td>청소비</td>
+									<td>{{ cleanerCost | comma }}원</td>							
 								</tr>
 								
 								<tr>
@@ -314,11 +379,11 @@ table, td, tr {
 									<td>숙박세와 수수료</td>
 									<td>{{ setTex | comma }}원</td>							
 								</tr>
-								<tr>
-									<td>총 합계</td>
-									<td>{{ setTotalCost | comma  }}원</td>
-								</tr>
 							</table>
+						</div>
+						<hr>
+						<div>
+						총금액 {{ setTotalCost | comma  }}원
 						</div>
 					</div>
 				</div>
@@ -326,14 +391,14 @@ table, td, tr {
 		</div>
 		<div>
 		<hr>
-			<div>
+			<div style="margin-bottom: 70px;">
 				<h3>후기</h3>
 				<div>
 					<c:choose>
 						<c:when test="${ not empty reviewListFour  }">
 							<div><span style="color: #ff385c"><i class="fas fa-star"></i></span><span>${ score }(${ count })</span></div>
-							<div class="horizontal" style="width: 932px;">
-								<div class="reviewWidth">
+							<div class="horizontal drawOutLine" style="width: 932px; margin-bottom: 30px;">
+								<div class="reviewWidth drawOutLine">
 									<c:forEach var="review" varStatus="status" items="${ reviewListFour }">
 										<c:if test="${ status.index lt 2 }">
 											<span>${ review.id }</span><span class="float_right"><fmt:formatDate value="${ review.regDate }" pattern="yyyy-MM-dd" /></span>
@@ -342,7 +407,7 @@ table, td, tr {
 										</c:if>
 									</c:forEach>
 								</div>
-								<div class="reviewWidth">
+								<div class="reviewWidth drawOutLine">
 									<c:forEach var="review" varStatus="status" items="${ reviewListFour }">
 										<c:if test="${ status.index gt 1 }">
 											<span>${ review.id }</span><span class="float_right"><fmt:formatDate value="${ review.regDate }" pattern="yyyy-MM-dd" /></span>
@@ -352,7 +417,7 @@ table, td, tr {
 									</c:forEach>
 								</div>
 							</div>
-							<button type="button" v-on:click="showReviewList" class="float_right">전체 리뷰 보기</button>
+							<button type="button" v-on:click="showReviewList" class="float_right btn btn-dark" style="margin-bottom: 50px;">전체 리뷰 보기</button>
 						</c:when>
 						<c:otherwise>
 							<div style="text-align: center;">후기글이 없음</div>
@@ -362,7 +427,7 @@ table, td, tr {
 					<div id="dialog" style="width: auto;" title="후기 목록">
 						<div><span style="color: #ff385c"><i class="fas fa-star"></i></span>${ score }점ㆍ(후기 ${ count }개)</div><br>
 						<c:forEach var="review" items="${ reviewList }">
-							<div>
+							<div class="drawOutLine">
 								<span>${ review.id }</span><span class="float_right"><fmt:formatDate value="${ review.regDate }" pattern="yyyy-MM-dd" /></span>
 								<div><pre>${ review.comment }</pre></div><br>
 							</div>
@@ -383,23 +448,23 @@ table, td, tr {
 						<h4>숙소 이용규칙</h4>
 						<table>
 							<tr>
-								<td>아이콘</td>
+								<td><i class="fas fa-user-clock"></i></td>
 								<td>체크인 시간: 오후 3:00 이후</td>
 							</tr>
 							<tr>
-								<td>아이콘</td>
+								<td><i class="fas fa-user-clock"></i></td>
 								<td>체크아웃 시간: 오전 11:00 이후</td>
 							</tr>
 							<tr>
-								<td>아이콘</td>
+								<td><i class="fas fa-smoking-ban"></i></td>
 								<td>흡연 금지</td>
 							</tr>
 							<tr>
-								<td>아이콘</td>
+								<td><i class="fas fa-dog"></i></td>
 								<td>반려동물 동반 불가</td>
 							</tr>
 							<tr>
-								<td>아이콘</td>
+								<td><i class="fas fa-birthday-cake"></i></td>
 								<td>파티나 이벤트 금지</td>
 							</tr>
 						</table>
@@ -408,11 +473,11 @@ table, td, tr {
 						<h4>숙소 이용규칙</h4>
 						<table>
 							<tr>
-								<td>아이콘</td>
+								<td><i class="fas fa-hand-sparkles"></i></td>
 								<td>에어비앤비의 강화된 청소 절차 준수에 동의했습니다. 자세히 알아보기</td>
 							</tr>
 							<tr>
-								<td>아이콘</td>
+								<td><i class="fas fa-people-arrows"></i></td>
 								<td>에어비앤비의 사회적 거리 두기 및 관련 가이드라인이 적용됩니다.</td>
 							</tr>
 						</table>
@@ -425,14 +490,24 @@ table, td, tr {
 				</div>
 			</div>
 		</div>
+		<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 	</div>
-	<script src="/script/jquery-3.5.1.js"></script>
+	
+<!-- 	<script src="/script/jquery-3.5.1.js"></script> -->
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a2aaef4af8220ddff7af9d36feda352a&libraries=services"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+<!-- 	<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> -->
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"></script>
 	
 	<script>
-	
+		let bookList = '${ bookList }';
+		let str = bookList.substring(1, bookList.length-1);
+		str = str.replace(/ /g,"")
+		
+		var disabledDays = str.split(',');
+		
+		console.log(disabledDays);
+		console.log('disabledDays : ' + disabledDays);
+		
 		// 집타입 설정
 		if('${ hostVo.stayType }' == '집 전체'){
 			$('#stayExplan').text('게스트가 숙소 전체를 다른 사람과 공유하지 않고 단독으로 이용합니다. 게스트 전용 출입구가 있고 공용 공간이 없습니다. 일반적으로 침실, 욕실, 부엌이 포함됩니다.');
@@ -453,7 +528,7 @@ table, td, tr {
 			$.datepicker.setDefaults($.datepicker.regional['ko']); 
 
     		$('#checkInDate').datepicker({
-            	dateFormat: 'yy-mm-dd' //Input Display Format 변경
+            	dateFormat: 'yy-m-d' //Input Display Format 변경
                 ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
                 ,showMonthAfterYear:true //년도 먼저 나오고, 뒤에 월 표시
                 ,changeYear: true //콤보박스에서 년 선택 가능
@@ -489,8 +564,8 @@ table, td, tr {
 						$('#checkOutDate').datepicker("option", "minDate", startDate);
     					
                       	// 체크아웃 선택 최대 선택가능한 날짜 설정
-						for(let i=0;i<vue.disabledDays.length;i++) {
-							let compareDate = new Date(vue.disabledDays[i]);
+						for(let i=0;i<disabledDays.length;i++) {
+							let compareDate = new Date(disabledDays[i]);
 							let sDate = startDate - compareDate;
 							console.log('sDate : ' + sDate);
 							console.log('startDate : ' + startDate);
@@ -500,9 +575,12 @@ table, td, tr {
 								alert('해당 날짜는 선택할 수 없습니다. 다시 선택해주세요.');
 								$('#checkOutDate').datepicker('option', 'disabled', true);
 								$('#checkInDate').datepicker('setDate');
+								$('#checkOutDate').datepicker('setDate');
+								vue.startDate = '';
+								vue.endDate = '';
+								vue.isPaymentShow = false;
 								return;
 							}
-								
 							
 							if(sDate < 0) {
 								
@@ -525,7 +603,7 @@ table, td, tr {
     		});
     		
     		$('#checkOutDate').datepicker({
-            	dateFormat: 'yy-mm-dd' //Input Display Format 변경
+            	dateFormat: 'yy-m-d' //Input Display Format 변경
                 ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
                 ,showMonthAfterYear:true //년도 먼저 나오고, 뒤에 월 표시
                 ,changeYear: true //콤보박스에서 년 선택 가능
@@ -550,8 +628,8 @@ table, td, tr {
             		  	
             			console.log('endDate : ' + endDate);
             			
-						for(let i=0;i<vue.disabledDays.length;i++) {
-							let compareDate = new Date(vue.disabledDays[i]);
+						for(let i=0;i<disabledDays.length;i++) {
+							let compareDate = new Date(disabledDays[i]);
 							
 							let sDate = startDate - compareDate;
 							let eDate = endDate - compareDate;
@@ -560,6 +638,8 @@ table, td, tr {
 
 							if((sDate < 0 && eDate > 0) || (sDate > 0 && eDate < 0)) {
 								alert('다시 선택해주세요');
+								$('#checkOutDate').datepicker('setDate');
+								vue.endDate = '';
                         		return;
 							}
 							
@@ -601,8 +681,8 @@ table, td, tr {
 		// 특정일 선택막기
 		function disableAllTheseDays(date) {
 		    let m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
-		    for (i = 0; i < vue.disabledDays.length; i++) {
-		        if($.inArray(y + '-' +(m+1) + '-' + d, vue.disabledDays) != -1) {
+		    for (i = 0; i < disabledDays.length; i++) {
+		        if($.inArray(y + '-' +(m+1) + '-' + d, disabledDays) != -1) {
 		            return [false];
 		        }
 		    }
@@ -614,8 +694,8 @@ table, td, tr {
 		  	data: {
 		  		startDate: '',
 		  		endDate: '',
-		  		disabledDays: ["2021-1-28", "2021-1-29", "2021-1-30"], // 비활성화할 날짜
-		  		
+// 		  		disabledDays: ["2021-2-8", "2021-2-11", "2021-2-12"], // 비활성화할 날짜
+// 		  		disabledDays: str2,
 		  		stayCostPerOneDay: ${ hostVo.cost },
 		  		stayCost: 0,
 		  		gapPeriod: 1,
@@ -657,27 +737,29 @@ table, td, tr {
 		  			let isSaveContent = confirm('저장하시겠습니까?');
 		  			if(isSaveContent) {
 		  				$.ajax({
-		  					url: '/content/isExist',
-		  					data: { hostNum : ${ hostVo.num }, id: 'test' },
+		  					url: '/travel/isExist',
+		  					data: { hostNum : ${ hostVo.num }, id: '${ id }' },
 		  					success: function(res) {
 		  						if(res == 0){
 		  							$.ajax({
-		  								url: '/content/save',
-		  								data: { hostNum : ${ hostVo.num }, id: 'test' },
+		  								url: '/travel/save',
+		  								data: { hostNum : ${ hostVo.num }, id: '${ id }' },
 		  								success: function(res) {
 		  									// 1이면 등록된 것
 		  									if(res == 1){
 			  									let isMove = confirm('저장하였습니다. 저장목록으로 이동하시겠습니까?');
 			  						  			if(isMove) {
-			  						  				location.href = '/travel/savelist';
+			  						  				location.href = '/travel/history?viewType=save';
 			  						  			}
-		  									}
+		  									} else {
+												alert('다시 시도해주세요.');
+			  								}
 		  								}
 		  							});
 		  						} else {
 		  							let isMove = confirm('이미 저장 되어있습니다. 저장목록으로 이동하시겠습니까?');
   						  			if(isMove) {
-  						  				location.href = '/travel/savelist';
+  						  				location.href = '/travel/history?viewType=save';
   						  			}
 		  						}
 		  					}
@@ -688,9 +770,18 @@ table, td, tr {
 		  			$("#dialog").dialog("open");
 		  		},
 		  		booking: function() {
+					if('${ id }' == '') {
+						alert('로그인을 하셔야 결제를 진행할 수 있습니다.')
+						$("#loginModal").modal('show');
+			  			return;
+					}
 		  			let isBooking = confirm('정말 결제하시겠습니까?');
 		  			if(isBooking) {
-		  				location.href='/book/bookMain?checkIn='+this.startDate+'&checkOut='+this.endDate+ '&nights='+this.gapPeriod+ '&expectedCost=' + this.totalCost +'&cntOfPerson='+this.cntOfGuest+'&noNum=${ hostVo.num }';
+			  			if(this.startDate == ''|| this.endDate == '') {
+				  			alert('예약할 날짜를 선택해주세요!');
+				  			return;
+		  				}
+		  				location.href='/book/check?checkIn='+this.startDate+'&checkOut='+this.endDate+'&cost=' + this.totalCost +'&cntOfPerson='+this.cntOfGuest+'&noNum=${ hostVo.num }';
 		  			}
 		  		}
 		  	},
@@ -700,15 +791,15 @@ table, td, tr {
 		  			return this.stayCost;
 		  		},
 		  		setServiceCost: function() {
-		  			this.serviceCost = this.stayCost * 0.1;
+		  			this.serviceCost = this.stayCost * 0.1
 		  			return this.serviceCost;
 		  		},
 		  		setTex: function() {
-		  			this.tex = this.stayCost * 0.01;
+		  			this.tex = this.gapPeriod * 800;
 		  			return this.tex;
 		  		},
 		  		setTotalCost: function() {
-		  			this.totalCost = this.stayCost + this.serviceCost + this.tex;
+		  			this.totalCost = this.stayCost + this.serviceCost + this.cleanerCost + this.tex;
 		  			return this.totalCost;
 		  		}
 		  	},
@@ -718,7 +809,6 @@ table, td, tr {
 		  		  }
 		  	}
 		});
-		
 		// ====================== 현재 집 위치 지도 ===========================
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 	    mapOption = {

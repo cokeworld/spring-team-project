@@ -7,7 +7,7 @@
 <title>평가 및 후기 수정</title>
 <style>
 .app {
-	width: 840px;
+	width: 880px;
 	display: block;
 	margin: 0 auto;
 	position: relative;
@@ -25,17 +25,12 @@
 
 div {
 	padding: 10px;
-	border: solid red 1px;
 }
 
 hr {
 	border: 0;
 	height: 1px;
 	background: #d2d2d2;
-}
-
-p {
-	border: solid orange 1px;	
 }
 
 .overflow {
@@ -99,82 +94,91 @@ p {
   height: 40px;
   pointer-events: none;
 }
-
+.drawOutLine {
+	border: solid 1px #d2d2d2;
+}
 </style>
 </head>
-<body>
-	<div class="app" id="app">
-		<div>돌아가기</div>
-		<div>평가 및 후기</div>
-		<hr>
-		<div class="horizontal">
-			<div>
-				<img src="/upload/${ imagesVo.uploadpath }/${ imagesVo.uuid }_${ imagesVo.filename }" width="200" height="200">
-				<p class="overflow">${ hostVo.address1 } ${ hostVo.address2 } </p>
-				<p>${ hostVo.stayType }ㆍ후기(${ count })</p>	
-				<p>호스트 : ${ hostVo.id }</p>
-				<p>2021-01-27 ~ 2021-01-28</p>
-			</div>
-			
-			<div>
-				<h3>${ hostVo.id }에 대한 후기를 수정하세요.</h3>
-				<h4>숙박이 어땟나요?</h4>
-				<span><b>만족도</b></span><br>
-				<div class="startRadio" style="padding: 0px;">
-					<label class="startRadio__box">
-						<input type="radio" name="score" v-on:change="setScore($event)" :checked="score == 0.5">
-						<span class="startRadio__img"><span class="blind">0.5</span></span>
-					</label>
-					<label class="startRadio__box">
-						<input type="radio" name="score" v-on:change="setScore($event)" :checked="score == 1">
-						<span class="startRadio__img"><span class="blind">1</span></span>
-					</label>
-					<label class="startRadio__box">
-						<input type="radio" name="score" v-on:change="setScore($event)" :checked="score == 1.5">
-						<span class="startRadio__img"><span class="blind">1.5</span></span>
-					</label>
-					<label class="startRadio__box">
-						<input type="radio" name="score" v-on:change="setScore($event)" :checked="score == 2">
-						<span class="startRadio__img"><span class="blind">2</span></span>
-					</label>
-					<label class="startRadio__box">
-						<input type="radio" name="score" v-on:change="setScore($event)" :checked="score == 2.5">
-						<span class="startRadio__img"><span class="blind">2.5</span></span>
-					</label>
-					<label class="startRadio__box">
-						<input type="radio" name="score" v-on:change="setScore($event)" :checked="score == 3">
-						<span class="startRadio__img"><span class="blind">3</span></span>
-					</label>
-					<label class="startRadio__box">
-						<input type="radio" name="score" v-on:change="setScore($event)" :checked="score == 3.5">
-						<span class="startRadio__img"><span class="blind">3.5</span></span>
-					</label>
-					<label class="startRadio__box">
-						<input type="radio" name="score" v-on:change="setScore($event)" :checked="score == 4">
-						<span class="startRadio__img"><span class="blind">4</span></span>
-					</label>
-					<label class="startRadio__box">
-						<input type="radio" name="score" v-on:change="setScore($event)" :checked="score == 4.5">
-						<span class="startRadio__img"><span class="blind">4.5</span></span>
-					</label>
-					<label class="startRadio__box">
-						<input type="radio" name="score" v-on:change="setScore($event)" :checked="score == 5">
-						<span class="startRadio__img"><span class="blind">5</span></span>
-					</label>
+<body style="background-color: #f2f2f2;">
+	<div class="app" style="background-color: white;">
+		<jsp:include page="/WEB-INF/views/include/commonHeader.jsp" />
+		<div id="app">
+			<div>평가 및 후기 수정</div>
+			<hr>
+			<div class="horizontal">
+				<div class="verticality">
+					<div class="drawOutLine">
+						<img src="/upload/${ imagesVo.uploadpath }/${ imagesVo.uuid }_${ imagesVo.filename }" width="200" height="200">
+						<p class="overflow">${ hostVo.address1 } ${ hostVo.address2 } </p>
+						<p>${ hostVo.stayType }ㆍ후기(${ count })</p>	
+						<p>호스트 : ${ hostVo.id }</p>
+						<p>2021-01-27 ~ 2021-01-28</p>
+					</div>
 				</div>
-				<hr>				
-				<span><b>후기</b></span><br>
-				<span>회원님의 후기는 회원님의 프로필과 회원님의 호스트 숙소 페이지에서 전체 공개됩니다.</span>
-				<textarea v-model="comment" name="comment" maxlength="500" style="resize: none; width: 570px; height: 120px;"></textarea>
-				<span style="position: relative; left: 530px; top: -40px;">{{ commentCount }}</span>
-				<hr>
-				<button type="button" v-on:click="modifyReview">수정하기</button>
-				<button type="button" v-on:click="cancelModifyReview">취소하기</button>
+				
+				<div class="drawOutLine">
+					<h3>${ hostVo.id }에 대한 후기를 수정하세요.</h3>
+					<hr>
+					<h4>숙박이 어땟나요?</h4>
+					<span><b>만족도</b></span><br>
+					<div class="startRadio" style="padding: 0px;">
+						<label class="startRadio__box">
+							<input type="radio" name="score" v-on:change="setScore($event)" :checked="score == 0.5">
+							<span class="startRadio__img"><span class="blind">0.5</span></span>
+						</label>
+						<label class="startRadio__box">
+							<input type="radio" name="score" v-on:change="setScore($event)" :checked="score == 1">
+							<span class="startRadio__img"><span class="blind">1</span></span>
+						</label>
+						<label class="startRadio__box">
+							<input type="radio" name="score" v-on:change="setScore($event)" :checked="score == 1.5">
+							<span class="startRadio__img"><span class="blind">1.5</span></span>
+						</label>
+						<label class="startRadio__box">
+							<input type="radio" name="score" v-on:change="setScore($event)" :checked="score == 2">
+							<span class="startRadio__img"><span class="blind">2</span></span>
+						</label>
+						<label class="startRadio__box">
+							<input type="radio" name="score" v-on:change="setScore($event)" :checked="score == 2.5">
+							<span class="startRadio__img"><span class="blind">2.5</span></span>
+						</label>
+						<label class="startRadio__box">
+							<input type="radio" name="score" v-on:change="setScore($event)" :checked="score == 3">
+							<span class="startRadio__img"><span class="blind">3</span></span>
+						</label>
+						<label class="startRadio__box">
+							<input type="radio" name="score" v-on:change="setScore($event)" :checked="score == 3.5">
+							<span class="startRadio__img"><span class="blind">3.5</span></span>
+						</label>
+						<label class="startRadio__box">
+							<input type="radio" name="score" v-on:change="setScore($event)" :checked="score == 4">
+							<span class="startRadio__img"><span class="blind">4</span></span>
+						</label>
+						<label class="startRadio__box">
+							<input type="radio" name="score" v-on:change="setScore($event)" :checked="score == 4.5">
+							<span class="startRadio__img"><span class="blind">4.5</span></span>
+						</label>
+						<label class="startRadio__box">
+							<input type="radio" name="score" v-on:change="setScore($event)" :checked="score == 5">
+							<span class="startRadio__img"><span class="blind">5</span></span>
+						</label>
+					</div>
+					<hr>				
+					<span><b>후기</b></span><br>
+					<span>회원님의 후기는 회원님의 프로필과 회원님의 호스트 숙소 페이지에서 전체 공개됩니다.</span>
+					<textarea v-model="comment" name="comment" maxlength="500" style="resize: none; width: 570px; height: 120px;"></textarea>
+					<span style="position: relative; left: 530px; top: -40px;">{{ commentCount }}</span>
+					<hr>
+					<div class="text-center">
+						<button type="button" class="btn btn-dark" v-on:click="modifyReview">수정하기</button>
+						<button type="button" class="btn btn-dark" v-on:click="cancelModifyReview">취소하기</button>
+					</div>
+				</div>
 			</div>
 		</div>
+		<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 	</div>
-	<script src="/script/jquery-3.5.1.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+	
 	<script>
 	 	
 		vue = new Vue({
@@ -199,7 +203,8 @@ p {
 							success: function(res) {
 								console.log(res);
 								if(res == 'OK') {
-									location.href = '/review/content?num=${ reviewVo.num }&pageNum=${ pageNum }';
+// 									location.href = '/review/content?num=${ reviewVo.num }&pageNum=${ pageNum }';
+									location.href = '/user/MyReviews?pageNum=${ pageNum }';
 // 									location.href = '/review/MyReviews';
 								}
 							}
@@ -210,7 +215,7 @@ p {
 					let isCancel = confirm('취소하시겠습니까?');
 					if(isCancel) {
 // 						location.href = '/review/content?num=${ reviewVo.num }';
-						location.href = '/review/MyReviews?pageNum=${ pageNum }';
+						location.href = '/user/MyReviews?pageNum=${ pageNum }';
 					}
 				},
 				setScore: function(event) {

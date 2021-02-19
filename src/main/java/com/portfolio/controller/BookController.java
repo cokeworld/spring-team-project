@@ -1,11 +1,10 @@
 package com.portfolio.controller;
 
-import java.sql.Date;
-import java.sql.Timestamp;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,16 +12,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
 import com.portfolio.domain.BookVo;
 import com.portfolio.domain.HostVo;
 import com.portfolio.domain.ImagesVo;
-import com.portfolio.domain.ReviewVo;
+import com.portfolio.domain.UserVo;
 import com.portfolio.service.BookService;
 import com.portfolio.service.HostService;
-import com.portfolio.service.MysqlService;
 
 import lombok.extern.java.Log;
 
@@ -32,75 +30,68 @@ import lombok.extern.java.Log;
 public class BookController {
 	
 	@Autowired
-	BookService bookService;
+	private BookService bookService;
+	
 	@Autowired
-	HostService hostService;
-	@Autowired
-	MysqlService mysqlService;
-
-	@GetMapping("/bookMain")
-	public String bookMain(BookVo bookVo, Model model) {
-		log.info("GET - bookMain 호출");
+	private HostService hostService;
+	
+	@GetMapping("/check")
+	public String check(HttpSession session, BookVo bookVo, Model model) throws ParseException {
+		String id = (String) session.getAttribute("id");
 		
-		//content.jsp에서 받아온 결제 데이터 처리
-		model.addAttribute("bookVo", bookVo);
-		int noNum = bookVo.getNoNum();
+		Map<String, Object> contentInfo = hostService.getContentInfoForBooking(bookVo.getNoNum(), bookVo);
+		HostVo hostVo = (HostVo) contentInfo.get("hostVo");
+		UserVo userVo = (UserVo) contentInfo.get("userVo");
+		bookVo.setId(id);
 		
-		//hostData 받아오기
-		HostVo hostVo = hostService.getHostVo(noNum);
-		model.addAttribute("hostVo", hostVo);
-		
-		//image, count, score 데이터 받아오기
-		Map<String, Object> contentInfo = hostService.getContentInfo(noNum);
-		
-		List<ImagesVo> imageList = (List<ImagesVo>) contentInfo.get("imageList");
-		
+		ImagesVo imagesVo = (ImagesVo) contentInfo.get("imagesVo");
 		int count = (int) contentInfo.get("count");
-		Double score = (Double) contentInfo.get("score");
-		score = Double.isNaN(score) ? 0.0 : score;
+		Double score = Double.parseDouble((String) contentInfo.get("score") == null ? "0": (String) contentInfo.get("score"));
+		int days = (int) contentInfo.get("days");
+		ArrayList<String> bookList = (ArrayList<String>) contentInfo.get("bookList");
 		
-		model.addAttribute("imageList", imageList);
+		
+		model.addAttribute("hostVo", hostVo);
+		model.addAttribute("userVo", userVo);
+		model.addAttribute("bookVo", bookVo);
+		model.addAttribute("imagesVo", imagesVo);
 		model.addAttribute("count", count);
 		model.addAttribute("score", score);
-		return "book/bookMain";
+		model.addAttribute("days", days);
+		model.addAttribute("bookList", bookList);
+		
+		return "/book/checkBook";
 	}
-	
 	
 	@GetMapping("/iamport")
-	public String iamport(BookVo bookVo, Model model) {
-		log.info("GET - iamport 호출");
+	public void iamport(BookVo bookVo, Model model) {
+		log.info("iamport - get()");
+		log.info(bookVo.toString());
 		model.addAttribute("bookVo", bookVo);
-		
-		HostVo hostVo = hostService.getHostVo(bookVo.getNoNum());
-		model.addAttribute("hostVo", hostVo);
-		return "book/iamport";
 	}
 	
-	@PostMapping("iamportAjax")
+	@PostMapping("/iamport")
 	@ResponseBody
-	public int addBook(BookVo bookVo) {
-		log.info("POST - addBook 호출");
+	public String iamportAjax(BookVo bookVo, Model model) {
+		log.info("iamport - post()");
+		Gson gson = new Gson();
 		
-		bookVo.setBookNum(mysqlService.getNextNum("airbnb_book"));
-		bookVo.setPaidAt(new Timestamp(System.currentTimeMillis()));
-		bookService.addBook(bookVo);
+		log.info(bookVo.toString());
 		
-		return bookVo.getBookNum();
-	}
-	
-	@GetMapping("/bookList")
-	public String bookList(Model model, int num) {
-		log.info("GET-bookList 호출");
+		int num = bookService.addBook(bookVo);
+		String strNum = String.valueOf(num);
 		
-		BookVo bookVo = bookService.getBookByNum(num);
-		HostVo hostVo = hostService.getHostVo(bookVo.getNoNum());
-		log.info("bookList-bookVo = " + bookVo.toString());
-		log.info("bookList-hostVo = " + hostVo.toString());
-		
-		model.addAttribute("bookVo", bookVo);
-		model.addAttribute("hostVo", hostVo);
-		
-		return "book/bookList";
+		return strNum;
 	}
 
+	@GetMapping("/complete")
+	public String bookList(HttpSession session, int num, Model model) {
+		String id = (String) session.getAttribute("id");
+		
+		BookVo bookVo = bookService.getBookInfoByNumAndId(num, id);
+		log.info(bookVo.toString());
+		model.addAttribute("bookVo", bookVo);
+		
+		return "/book/bookList";
+	}
 }

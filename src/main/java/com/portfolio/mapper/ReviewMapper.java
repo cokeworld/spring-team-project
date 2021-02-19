@@ -16,7 +16,11 @@ public interface ReviewMapper {
 	
 	public List<ReviewVo> getReviewsByNoNum(int noNum);
 	
+	public List<ReviewVo> getReviews();
+	
 	public List<ReviewVo> getReviewsById(@Param("id") String id, @Param("startRow") int startRow);
+	
+	public String getAvgScoreByNoNum(int noNum);
 	
 	public int countReviewByNoNum(int noNum);
 	

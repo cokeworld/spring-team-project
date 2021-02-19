@@ -1,63 +1,48 @@
 package com.portfolio.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import com.portfolio.domain.HostVo;
+import com.portfolio.domain.LocationVo;
+import com.portfolio.domain.ReviewVo;
+import com.portfolio.service.HostService;
+import com.portfolio.service.LocationService;
+import com.portfolio.service.ReviewService;
 
 import lombok.extern.java.Log;
 
-@Controller // 클래스 안에서 @GetMapping 등의 애노테이션을 사용 가능
+@Controller
 @Log
-public class HomeController  {
+public class HomeController {
+	
+	@Autowired
+	private LocationService locationService;
+	
+	@Autowired
+	private ReviewService reviewService;
+	
+	@Autowired
+	private HostService hostService;
 	
 	@GetMapping("/")
-	public String indexBlank() {
-		log.info("index() 호출됨");
-		return "index";
+	public String main(Model model) {
+		List<LocationVo> locationList = locationService.getLocationList();
+		List<ReviewVo> reviewList = reviewService.getReviews();
+		List<HostVo> hostList = hostService.getContentInfoForMain();
+		ArrayList<String> strLocationList = new ArrayList();
+		for(LocationVo locationVo : locationList) {
+			strLocationList.add(locationVo.getLocation());
+		}
+		
+		model.addAttribute("reviewList", reviewList);
+		model.addAttribute("locationList", strLocationList);
+		model.addAttribute("hostList", hostList);
+		return "/index";
 	}
-	
-	@GetMapping("/index")
-	public String index() {
-		log.info("index() 호출됨");
-		return "index";
-	}
-	
-	@GetMapping("/writeForm")
-	public String writeForm() {
-		log.info("writeForm() 호출됨");
-		return "/customerCenter/writeForm";
-	}
-	
-	@GetMapping("/customerCenter")
-	public String customerCenter() {
-		log.info("customerCenter() 호출됨");
-		return "/customerCenter/customerCenter";
-	}
-
-//	@GetMapping("/search")
-//	public String search() {
-//		log.info("search() 호출됨");
-//		return "serach/search";
-//	}
-//	
-//	@GetMapping("/result")
-//	public String result() {
-//		log.info("result() 호출됨");
-//		return "serach/result";
-//	}
-	
-//	@GetMapping("/company/welcome")
-//	public void welcome() {
-//		log.info("welcome() 호출됨");
-////		return "company/welcome";
-//		
-//		// 리턴타입이 void면 애노테이션 url 요청경로를
-//		// 실행할 jsp뷰 이름으로 사용함
-//	}
-//	
-//	@GetMapping("/company/history")
-//	public void history() {
-//		log.info("history() 호출됨");
-//	}
-
-	
 }

@@ -16,18 +16,14 @@
     <script>
         var IMP = window.IMP; // 생략가능
         IMP.init('imp00454002'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
-
-		// name, amount 구현 계획(코드 합치는 단계에서는)
-        // buyer관련은 로그인 구현 완료후 값을 입력한다.
-        // pg: iamport 테스트 버전이라 무엇을 선택하든 카카오페이로 결제 진행
         IMP.request_pay({
-            pg : `${ bookVo.pgProvider }`,
+            pg : 'kakao',
             pay_method : 'card',
             merchant_uid : 'merchant_' + new Date().getTime(),
-            name : `${ hostVo.title }`,
-            amount : `${ bookVo.expectedCost }`,
+            name : '주문명:결제테스트',
+            amount : ${ bookVo.cost },
             buyer_email : 'iamport@siot.do',
-            buyer_name : '김두한',
+            buyer_name : '${ bookVo.id }',
             buyer_tel : '010-1234-5678',
             buyer_addr : '서울특별시 강남구 삼성동',
             buyer_postcode : '123-456',
@@ -35,32 +31,27 @@
             // 모바일 결제시, 결제가 끝나고 랜딩되는 URL을 지정 (카카오페이, 페이코, 다날의 경우는 필요없음. PC와 마찬가지로 callback함수로 결과가 떨어짐)
         }, function(rsp) {
             if ( rsp.success ) {
-				let rqsData = { 
-						impUid: rsp.imp_uid,
-		        		merchantUid: rsp.merchant_uid,
-		        		paidAmount: rsp.paid_amount,
-		        		pgProvider: rsp.pg_provider,
-		        		buyerName: rsp.buyer_name,
-		        		checkIn: `${bookVo.checkIn}`,
-		        		checkOut: `${bookVo.checkOut}`,
-		        		cntOfPerson: ${bookVo.cntOfPerson},
-		        		noNum: ${bookVo.noNum}
-		        		// paidAt: rsp.paid_at
+				let sendDate = {
+						id: '${ bookVo.id }',
+						cost: ${ bookVo.cost },
+						checkIn: '${ bookVo.checkIn }',
+						checkOut: '${ bookVo.checkOut }',
+						cntOfPerson: ${ bookVo.cntOfPerson },
+						noNum: ${ bookVo.noNum },
 				}
-                $.ajax({
-                    url: "iamportAjax",
-                	type: 'POST',
-//                 	dataType: 'json',
-                	data: rqsData,
-                   success: function(data) {
-                       	alert('결제완료');
-                  		location.href = '/book/bookList?num=' + data
-                     	},
-                   	error:function(jqXHR, textStatus, errorThrown) {
-       			  		console.log('데이터 전송 에러');
-       		        }
-              	});
-
+				console.log(sendDate)
+				$.ajax({
+					url: '/book/iamport',
+					type: 'POST',
+					data: sendDate,
+					success: function(data) {
+						alert('결제완료');
+						location.href = '/book/complete?num=' + data;
+					},
+					error:function(jqXHR, textStatus, errorThrown) {
+						console.log('데이터 전송 에러');
+					}
+				});
             } else {
                 var msg = '결제에 실패하였습니다.';
                 msg += '에러내용 : ' + rsp.error_msg;

@@ -16,7 +16,11 @@ public interface SaveMapper {
 	
 	public int getSaveNum(@Param("hostNum") int hostNum, @Param("id") String id);
 	
+	public int countSaveById(String id);
+	
 	public void updateSaveInfo(SaveVo saveVo);
 	
 	public int deleteSaveInfo(int num);
+	
+	public int deleteSaveById(String id);
 }
