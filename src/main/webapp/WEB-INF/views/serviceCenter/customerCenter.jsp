@@ -122,7 +122,7 @@ hr {
 									</c:otherwise>
 								</c:choose>
 							</div>
-							<c:if test="${ id eq 'admin' }">
+							<c:if test="${ id eq 'test1234' }">
 								<div class="writePosition">
 									<input type="button" value="글쓰기" class="btn" onclick="location.href='/customerCenter/faqWrite?pageNum=${ fPageNum }'">
 								</div>
@@ -289,7 +289,7 @@ hr {
 									<input type="hidden" name="num" value="\${res.qnaVo.num}">
 					`;
 				if(res.qnaVo.status == '답변대기') {
-					if('${ id }' == 'admin') {
+					if('${ id }' == 'test1234') {
 						str +=`
 									<button  class="btn btn-dark" data-toggle="modal" data-target="#qnaAnswer" role="button" onclick="addReply(\${res.qnaVo.num})">답글쓰기</button>
 						`;
@@ -317,7 +317,7 @@ hr {
 									<input type="hidden" name="replyNum" value="\${ res.reply.num }">
 									<input type="hidden" name="refNum" value="\${ res.reply.reRef }">
 					`;
-					if('${ id }' == 'admin') {	
+					if('${ id }' == 'test1234') {	
 						str +=`
 									<button  class="btn btn-dark" data-toggle="modal" data-target="#qnaAnswer" role="button" onclick="modifyReply(\${ res.reply.reRef }, \${ res.reply.num })">수정하기</button>
 									<button type="button" class="btn btn-dark" onclick="qnaReplyDeleteBtn(event)">삭제하기</button>

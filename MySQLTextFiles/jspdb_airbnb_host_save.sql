@@ -16,33 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `airbnb_book`
+-- Table structure for table `airbnb_host_save`
 --
 
-DROP TABLE IF EXISTS `airbnb_book`;
+DROP TABLE IF EXISTS `airbnb_host_save`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `airbnb_book` (
+CREATE TABLE `airbnb_host_save` (
   `num` int(11) NOT NULL AUTO_INCREMENT,
+  `host_num` int(11) NOT NULL,
   `id` varchar(45) COLLATE utf8_bin NOT NULL,
-  `cost` int(11) NOT NULL,
-  `check_in` varchar(20) COLLATE utf8_bin NOT NULL,
-  `check_out` varchar(20) COLLATE utf8_bin NOT NULL,
-  `cnt_of_person` int(11) NOT NULL,
-  `no_num` int(11) NOT NULL,
-  `reg_date` datetime NOT NULL,
+  `isSave` varchar(5) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`num`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `airbnb_book`
+-- Dumping data for table `airbnb_host_save`
 --
 
-LOCK TABLES `airbnb_book` WRITE;
-/*!40000 ALTER TABLE `airbnb_book` DISABLE KEYS */;
-INSERT INTO `airbnb_book` VALUES (1,'test',87600,'2021-2-8','2021-2-10',4,1,'2021-02-05 13:43:07'),(2,'test',121400,'2021-2-10','2021-2-13',3,1,'2021-02-05 15:23:24'),(3,'test',121400,'2021-2-15','2021-2-18',2,1,'2021-02-05 17:42:08'),(4,'test',87600,'2021-2-25','2021-2-26',1,1,'2021-02-05 20:16:11'),(7,'test',53800,'2021-3-5','2021-3-6',1,1,'2021-02-05 20:52:50'),(13,'asdf1234',48800,'2021-2-23','2021-2-26',2,9,'2021-02-17 12:30:30');
-/*!40000 ALTER TABLE `airbnb_book` ENABLE KEYS */;
+LOCK TABLES `airbnb_host_save` WRITE;
+/*!40000 ALTER TABLE `airbnb_host_save` DISABLE KEYS */;
+INSERT INTO `airbnb_host_save` VALUES (1,9,'test','Y'),(2,2,'test','Y'),(17,8,'asdf1234','Y'),(18,12,'test1234','Y');
+/*!40000 ALTER TABLE `airbnb_host_save` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-02-19 16:38:58
+-- Dump completed on 2021-02-22 22:58:18

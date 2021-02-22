@@ -16,29 +16,26 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `airbnb_host_save`
+-- Table structure for table `airbnb_location`
 --
 
-DROP TABLE IF EXISTS `airbnb_host_save`;
+DROP TABLE IF EXISTS `airbnb_location`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `airbnb_host_save` (
-  `num` int(11) NOT NULL AUTO_INCREMENT,
-  `host_num` int(11) NOT NULL,
-  `id` varchar(45) COLLATE utf8_bin NOT NULL,
-  `isSave` varchar(5) COLLATE utf8_bin NOT NULL,
-  PRIMARY KEY (`num`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+CREATE TABLE `airbnb_location` (
+  `location` varchar(9) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`location`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `airbnb_host_save`
+-- Dumping data for table `airbnb_location`
 --
 
-LOCK TABLES `airbnb_host_save` WRITE;
-/*!40000 ALTER TABLE `airbnb_host_save` DISABLE KEYS */;
-INSERT INTO `airbnb_host_save` VALUES (1,9,'test','Y'),(2,2,'test','Y'),(17,8,'asdf1234','Y');
-/*!40000 ALTER TABLE `airbnb_host_save` ENABLE KEYS */;
+LOCK TABLES `airbnb_location` WRITE;
+/*!40000 ALTER TABLE `airbnb_location` DISABLE KEYS */;
+INSERT INTO `airbnb_location` VALUES ('강릉'),('경주'),('고흥'),('광주'),('구례'),('군산'),('김천'),('남원'),('대구'),('대전'),('목포'),('무주'),('보령'),('부산'),('서귀포'),('서산'),('서울'),('세종'),('속초'),('수원'),('순천'),('안동'),('여수'),('영덕'),('영주'),('완도'),('울산'),('울진'),('원주'),('이천'),('인제'),('인천'),('전주'),('정선'),('정읍'),('제주'),('제천'),('진도'),('진주'),('창원'),('천안'),('철원'),('청송'),('춘천'),('충주'),('태백'),('통영'),('파주'),('평택'),('포항'),('함양'),('홍천'),('화성');
+/*!40000 ALTER TABLE `airbnb_location` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +47,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-02-19 16:38:57
+-- Dump completed on 2021-02-22 22:58:18

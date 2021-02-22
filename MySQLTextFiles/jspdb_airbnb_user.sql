@@ -16,25 +16,34 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `airbnb_mail_certified`
+-- Table structure for table `airbnb_user`
 --
 
-DROP TABLE IF EXISTS `airbnb_mail_certified`;
+DROP TABLE IF EXISTS `airbnb_user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `airbnb_mail_certified` (
+CREATE TABLE `airbnb_user` (
+  `id` varchar(45) COLLATE utf8_bin NOT NULL,
+  `password` varchar(60) COLLATE utf8_bin NOT NULL,
+  `name` varchar(45) COLLATE utf8_bin NOT NULL,
   `email` varchar(100) COLLATE utf8_bin NOT NULL,
-  `number` varchar(6) COLLATE utf8_bin NOT NULL
+  `tel` varchar(45) COLLATE utf8_bin NOT NULL,
+  `uuid` varchar(36) COLLATE utf8_bin DEFAULT NULL,
+  `filename` varchar(1000) COLLATE utf8_bin DEFAULT NULL,
+  `uploadpath` varchar(1000) COLLATE utf8_bin DEFAULT NULL,
+  `reg_date` datetime NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `airbnb_mail_certified`
+-- Dumping data for table `airbnb_user`
 --
 
-LOCK TABLES `airbnb_mail_certified` WRITE;
-/*!40000 ALTER TABLE `airbnb_mail_certified` DISABLE KEYS */;
-/*!40000 ALTER TABLE `airbnb_mail_certified` ENABLE KEYS */;
+LOCK TABLES `airbnb_user` WRITE;
+/*!40000 ALTER TABLE `airbnb_user` DISABLE KEYS */;
+INSERT INTO `airbnb_user` VALUES ('test1234','$2a$10$zvnEc5ARbUeoUa7/XL5V9u3446ereSkc0KF1FrYwK2t8WWRQivAni','김태경','xorud1350@naver.com','010-2222-2222',NULL,NULL,NULL,'2021-02-19 16:36:42');
+/*!40000 ALTER TABLE `airbnb_user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -46,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-02-19 16:38:57
+-- Dump completed on 2021-02-22 22:58:18

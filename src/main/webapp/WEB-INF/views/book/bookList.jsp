@@ -124,7 +124,7 @@ hr {
 			<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 		</div>
     </div>
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a2aaef4af8220ddff7af9d36feda352a&libraries=services"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d7611f9821af13e87e5eddada214e651&libraries=services"></script>
     <script>
 	    var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 	    mapOption = {

@@ -16,34 +16,25 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `airbnb_user`
+-- Table structure for table `airbnb_mail_certified`
 --
 
-DROP TABLE IF EXISTS `airbnb_user`;
+DROP TABLE IF EXISTS `airbnb_mail_certified`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `airbnb_user` (
-  `id` varchar(45) COLLATE utf8_bin NOT NULL,
-  `password` varchar(60) COLLATE utf8_bin NOT NULL,
-  `name` varchar(45) COLLATE utf8_bin NOT NULL,
+CREATE TABLE `airbnb_mail_certified` (
   `email` varchar(100) COLLATE utf8_bin NOT NULL,
-  `tel` varchar(45) COLLATE utf8_bin NOT NULL,
-  `uuid` varchar(36) COLLATE utf8_bin DEFAULT NULL,
-  `filename` varchar(1000) COLLATE utf8_bin DEFAULT NULL,
-  `uploadpath` varchar(1000) COLLATE utf8_bin DEFAULT NULL,
-  `reg_date` datetime NOT NULL,
-  PRIMARY KEY (`id`)
+  `number` varchar(6) COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `airbnb_user`
+-- Dumping data for table `airbnb_mail_certified`
 --
 
-LOCK TABLES `airbnb_user` WRITE;
-/*!40000 ALTER TABLE `airbnb_user` DISABLE KEYS */;
-INSERT INTO `airbnb_user` VALUES ('admin','$2a$10$Rt7jjUSlNIiY9eYs/1WF7u8lled8xu7E89co4Fb0YlD4GHRwUN8cm','유인모','yin5946@naver.com','010-2052-9054','d0f9ea95-eae0-4ba5-aea9-e9024caa7b14','11.gif','2021/02/17','2021-02-10 10:00:00'),('asdf1234','$2a$10$MSV/ZFSmQVdO6Xz4uYRjn.MvkdQP5X3NZFWl8L1zGtnuawm0LjOEm','유인모','yin5946@naver.com','123-1231-2312',NULL,NULL,NULL,'2021-02-15 22:29:47'),('test','$2a$10$MSV/ZFSmQVdO6Xz4uYRjn.MvkdQP5X3NZFWl8L1zGtnuawm0LjOEm','유인모','yin5946@naver.com','123-1231-2312',NULL,NULL,NULL,'2021-02-10 10:00:00'),('test1234','$2a$10$zvnEc5ARbUeoUa7/XL5V9u3446ereSkc0KF1FrYwK2t8WWRQivAni','김태경','xorud1350@naver.com','010-2222-2222',NULL,NULL,NULL,'2021-02-19 16:36:42');
-/*!40000 ALTER TABLE `airbnb_user` ENABLE KEYS */;
+LOCK TABLES `airbnb_mail_certified` WRITE;
+/*!40000 ALTER TABLE `airbnb_mail_certified` DISABLE KEYS */;
+/*!40000 ALTER TABLE `airbnb_mail_certified` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -55,4 +46,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-02-19 16:38:57
+-- Dump completed on 2021-02-22 22:58:18
