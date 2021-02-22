@@ -151,12 +151,12 @@ pre{
 				</c:otherwise>
 			</c:choose>
 			
-			<c:if test="${ id eq hostVo.id || id eq 'admin'}">
+			<c:if test="${ id eq hostVo.id || id eq 'test1234'}">
 				<button style="margin-left: 10px;" class="float_right btn btn-dark" type="button" v-on:click="contentDelete">삭제</button>
 				<button class="float_right btn btn-dark" type="button" v-on:click="contentModify">수정</button>
 			</c:if>
 			
-			<c:if test="${ not empty id && id ne 'admin' && id ne hostVo.id }">
+			<c:if test="${ not empty id && id ne 'test1234' && id ne hostVo.id }">
 				<button class="float_right btn btn-dark" type="button" v-on:click="contentSave">저장</button>
 			</c:if>
 			
