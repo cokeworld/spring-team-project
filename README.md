@@ -1,17 +1,49 @@
-# spring-team-project
-스프링 팀 프로젝트 - 예약파트 - 김태경
+# 🏠 숙박 예약 사이트
+
+>에어비앤비와 같은 숙박 예약 사이트
+
+</br>
+
+## 1. 제작 기간 & 참여 인원
+
+-  2021년 1월 11일 ~ 2020년 2월 23일 
+- 팀 프로젝트(5명)
+
+</br>
+
+## 2. 사용 기술
+
+#### `Back-end`
+
+  - Java 8
+  - Spring Boot 2.4
+  - Maven
+  - MyBatis 3.5
+  - MySQL 5.7
+
+#### `Front-end`
+
+* Vue.js 2.6
+
+</br>
 
 
+## 3. 핵심 기능
 
+* 숙소 등록/수정/삭제
+* 후기 및 평점 등록/수정/삭제
+* FAQ, QnA 게시글 등록/수정/삭제
+* 숙소 찜하기 저장/삭제
+* 숙소 검색
+* 결제 시스템
 
+</br>
 
-## 전달사항
+## 4. 기여 내용
 
--합치기 전 예약파트 코드를 받고 싶으신 분은 아래 링크 참고해주세요. </br>
-[commit: "finish: first step of book part"](https://github.com/cokeworld/spring-team-project/tree/7fef67e5b73a5006f38c7f8a6aa0ea0d949fa2a2)
-</br>bookList.jsp 에 import bookVo 삭제해주세요
+* 결제 시스템 구현
+  * 결제 처리
+  * 결제 내역 조회
+* 협업 툴(Github) 도입 및 설명
+* 팀 회의 참여 및 코드 리뷰
 
-</br></br>
-
--예약 데이터베이스 테이블은 아래 링크 참고해주세요.</br>
-[예약 데이터베이스 테이블](https://cokeworld.tistory.com/35)
