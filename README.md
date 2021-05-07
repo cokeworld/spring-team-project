@@ -23,7 +23,10 @@
 
 #### `Front-end`
 
-* Vue.js 2.6
+- JavaScript
+- jQuery
+- Ajax
+- Vue.js 2.6
 
 </br>
 
