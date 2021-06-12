@@ -48,3 +48,18 @@
 * 협업 툴(Github) 도입 및 설명
 * 팀 회의 참여 및 코드 리뷰
 
+</br>
+
+## 5. 기여 내용 구현 화면
+### 5-1) 예약 요청 페이지
+![](https://i.ibb.co/g9Smshx/team-project-1.png)
+
+</br>
+
+### 5-2) 결제 진행 페이지
+![](https://i.ibb.co/gWVP9CC/team-project-2.png)
+
+</br>
+
+### 5-3) 결제 완료 후 예약 확인 페이지
+![](https://i.ibb.co/VBk2CjT/team-project-3.png)
