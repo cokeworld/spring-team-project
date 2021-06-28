@@ -7,7 +7,7 @@
 ## 1. 제작 기간 & 참여 인원
 
 -  2021년 1월 11일 ~ 2021년 2월 23일 
-- 팀 프로젝트(5명)
+-  팀 프로젝트(5명)
 
 </br>
 
@@ -50,16 +50,24 @@
 
 </br>
 
-## 5. 기여 내용 구현 화면
+## 5. 기여 내용 설명
+
 ### 5-1) 예약 요청 페이지
+
 ![](https://i.ibb.co/g9Smshx/team-project-1.png)
 
 </br>
 
-### 5-2) 결제 진행 페이지
+### 5-2) 결제 진행
+
 ![](https://i.ibb.co/gWVP9CC/team-project-2.png)
 
 </br>
 
+![](https://i.ibb.co/cvLWWqT/iamport.png)
+
+</br>
+
 ### 5-3) 결제 완료 후 예약 확인 페이지
+
 ![](https://i.ibb.co/VBk2CjT/team-project-3.png)
